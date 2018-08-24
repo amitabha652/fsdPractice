@@ -23,12 +23,8 @@ public class DBUtility {
 	}
 	
 	// Close a connection
-	public static void closeConnection(Connection conn) {
-		try {
-            conn.close();
-        } catch (SQLException e) {
-
-        }
+	public static void closeConnection(Connection conn) throws SQLException {
+		conn.close();
 	}
 	
 }

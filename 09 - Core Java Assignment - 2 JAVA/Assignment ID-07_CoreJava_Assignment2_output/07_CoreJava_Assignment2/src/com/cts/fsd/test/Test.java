@@ -28,6 +28,15 @@ public class Test {
 //    		String sql = "CREATE TABLE TEST_TABLE1 (column1_int NUMBER not NULL, column2_dec NUMBER not NULL, column3_alpha VARCHAR(255), column4_date DATE)";
 //    		stmt.executeUpdate(sql);
     		
+    		
+    		
+    		
+    		// creating the Book Table
+//    		String sql = "CREATE TABLE BOOK_TABLE (bookId NUMBER not NULL, title VARCHAR(255) not NULL, price NUMBER not NULL, volume NUMBER , publishDate DATE)";
+//    		stmt.executeUpdate(sql);
+    		
+    		
+    		
     		List<String> queryList = new ArrayList<String>();
     		queryList.add("INSERT into TEST_TABLE1 values (1, 1.2, 'Ramesh', PARSEDATETIME('24 Aug 2018','dd MMM yyyy'));");
     		queryList.add("INSERT into TEST_TABLE1 values (2, 2.2, 'Jignesh', PARSEDATETIME('26-01-2018','dd-MM-yyyy'));");
@@ -41,10 +50,10 @@ public class Test {
     		
     		String selectQuery = "SELECT * FROM TEST_TABLE1";
     		ResultSet rs = stmt.executeQuery(selectQuery);
-    		System.out.println(String.format("%5s\t%5s\t%15s\t%15s", "column1_int", "column2_dec", "column3_alpha", "column4_date"));
-    		System.out.println(String.format("%5s\t%5s\t%15s\t%15s", "-----", "-----", "------------------", "------------------"));
+    		System.out.println(String.format("%15s\t%15s\t%15s\t%15s", "column1_int", "column2_dec", "column3_alpha", "column4_date"));
+    		System.out.println(String.format("%15s\t%15s\t%15s\t%15s", "---------------", "---------------", "---------------", "---------------"));
     		while (rs.next()) {
-    			System.out.println(String.format("%5s\t%5s\t%15s\t%15s", rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4)));
+    			System.out.println(String.format("%15s\t%15s\t%15s\t%15s", rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4)));
 			}
     		
     		
@@ -54,7 +63,12 @@ public class Test {
             System.err.println("Exception while creating the connection " + e.getMessage());
         } 
         finally {
-            DBUtility.closeConnection(conn);
+            try {
+				DBUtility.closeConnection(conn);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
         }
     }

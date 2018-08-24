@@ -72,3 +72,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:H:/Developme
 	at org.h2.mvstore.FileStore.open(FileStore.java:173)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
 	... 21 more
+2018-08-24 15:04:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "BOOK_TABLE" already exists; SQL statement:
+CREATE TABLE BOOK_TABLE (bookId NUMBER not NULL, title VARCHAR(255) not NULL, price NUMBER not NULL, volume NUMBER , publishDate DATE) [42101-197]
