@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cts.fsd.dao.ApplicationDAO;
 import com.cts.fsd.util.DBUtility;
 
 public class Test {
@@ -32,10 +33,12 @@ public class Test {
     		
     		
     		// creating the Book Table
-//    		String sql = "CREATE TABLE BOOK_TABLE (bookId NUMBER not NULL, title VARCHAR(255) not NULL, price NUMBER not NULL, volume NUMBER , publishDate DATE)";
+//    		String sql = "CREATE TABLE BOOK_TABLE (bookId NUMBER not NULL, title VARCHAR(255) not NULL, price NUMBER not NULL, volume NUMBER , publishDate DATE , subjectId NUMBER)";
 //    		stmt.executeUpdate(sql);
     		
-    		
+    		// creating the Subject Table
+//    		String sql = "CREATE TABLE SUBJECT_TABLE (subjectId NUMBER not NULL, subtitle VARCHAR(255) not NULL, durationInHours NUMBER not NULL)";
+//    		stmt.executeUpdate(sql);
     		
     		List<String> queryList = new ArrayList<String>();
     		queryList.add("INSERT into TEST_TABLE1 values (1, 1.2, 'Ramesh', PARSEDATETIME('24 Aug 2018','dd MMM yyyy'));");
@@ -57,7 +60,19 @@ public class Test {
 			}
     		
     		
+    		
+    		
+    		ApplicationDAO.getAllSubjectsFromDB();
+    		
+    		
+    		
     		stmt.close();
+    		
+    		
+    		
+    		
+    		
+    		
         } 
         catch (Exception e) {
             System.err.println("Exception while creating the connection " + e.getMessage());

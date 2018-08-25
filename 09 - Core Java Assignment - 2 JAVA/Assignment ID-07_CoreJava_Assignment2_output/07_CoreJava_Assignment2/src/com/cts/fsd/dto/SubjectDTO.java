@@ -63,13 +63,21 @@ public class SubjectDTO {
 
 	@Override
 	public String toString() {
-		StringBuffer bookBuffer = new StringBuffer();
-		references.forEach(book -> bookBuffer.append(book.getTitle() + "; "));
-		return  String.format("%6s\t%20s\t%8s\t%s" , subjectId , subtitle , durationInHours , "["+new StringBuffer().append(bookBuffer.toString().substring(0 , bookBuffer.toString().lastIndexOf("; "))).toString()+"]");
-		
-//		return "Subject [subjectId=" + subjectId + ", subtitle=" + subtitle
-//				+ ", durationInHours=" + durationInHours + ", references="
-//				+ references + "]";
+		return "SubjectDTO [subjectId=" + subjectId + ", subtitle=" + subtitle + ", durationInHours=" + durationInHours
+				+ ", references=" + references + "]";
 	}
+
+
+
+	/*@Override
+	public String toString() {
+//		StringBuffer bookBuffer = new StringBuffer();
+//		references.forEach(book -> bookBuffer.append(book.getTitle() + "; "));
+//		return  String.format("%6s\t%20s\t%8s\t%s" , subjectId , subtitle , durationInHours , "["+new StringBuffer().append(bookBuffer.toString().substring(0 , bookBuffer.toString().lastIndexOf("; "))).toString()+"]");
+//		
+		return "Subject [subjectId=" + subjectId + ", subtitle=" + subtitle
+				+ ", durationInHours=" + durationInHours + ", references="
+				+ references + "]";
+	}*/
 
 }

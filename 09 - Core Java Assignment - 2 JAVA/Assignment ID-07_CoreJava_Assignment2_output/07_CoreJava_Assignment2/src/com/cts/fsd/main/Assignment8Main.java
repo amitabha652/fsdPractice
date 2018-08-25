@@ -3,13 +3,11 @@ package com.cts.fsd.main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import com.cts.fsd.controller.ApplicationController;
+import com.cts.fsd.controller.UserController;
 import com.cts.fsd.dto.BookDTO;
 import com.cts.fsd.dto.SubjectDTO;
 import com.cts.fsd.exception.CustomException;
@@ -23,7 +21,6 @@ public class Assignment8Main {
 	static String[] argsToMainMethod = {};
 
 	public static void main(String[] args) {
-		Assignment8Main mainObj = new Assignment8Main();
 		BufferedReader buffer = null;
 		String inputStr;
 		boolean exitProgram = false;
@@ -52,7 +49,7 @@ public class Assignment8Main {
 						System.out.println("Operation - Add a Subject");
 						ApplicationUtility.displayHorizontalLine();
 						SubjectDTO subjectDTO = new SubjectDTO();
-						subjectDTO = getSubjectFromUser(buffer);
+						subjectDTO = UserController.getSubjectDetailsFromUser(buffer);
 						
 						ApplicationController.addSubject(subjectDTO);
 					}
@@ -66,8 +63,9 @@ public class Assignment8Main {
 						ApplicationUtility.displayHorizontalLine();
 						
 						BookDTO bookDTO = null;
-						bookDTO = getBookFromUser(buffer);
+						bookDTO = UserController.getBookDetailsFromUser(buffer);
 						ApplicationController.addBook(bookDTO);
+						bookDTO = null;
 					}
 					break;
 	
@@ -77,7 +75,12 @@ public class Assignment8Main {
 						ApplicationUtility.displayHorizontalLine();
 						System.out.println("Operation - Delete a Subject");
 						ApplicationUtility.displayHorizontalLine();
-//						TODO: ApplicationController.deleteSubject(buffer);
+						
+						SubjectDTO subjectDTO = null;
+						subjectDTO = UserController.getSubjectToRemoveFromUser(buffer);
+						if (null != subjectDTO) {
+							ApplicationController.deleteSubject(subjectDTO);
+						}
 					}
 					break;
 	
@@ -87,7 +90,12 @@ public class Assignment8Main {
 						ApplicationUtility.displayHorizontalLine();
 						System.out.println("Operation - Delete a Book");
 						ApplicationUtility.displayHorizontalLine();
-//						TODO: ApplicationController.deleteBook(buffer);
+						
+						BookDTO bookDTO = null;
+						bookDTO = UserController.getBookToRemoveFromUser(buffer);
+						if (null != bookDTO) {
+							ApplicationController.deleteBook(bookDTO);
+						}
 					}
 					break;
 	
@@ -97,7 +105,15 @@ public class Assignment8Main {
 						ApplicationUtility.displayHorizontalLine();
 						System.out.println("Operation - Search a Book");
 						ApplicationUtility.displayHorizontalLine();
-//						TODO: ApplicationController.searchBook(buffer);
+						
+						Map<String , String> searchMap = UserController.getBookSearchOptionFromUser(buffer);
+						if (null != searchMap && !searchMap.isEmpty()) {
+							List<BookDTO> bookDTOList = ApplicationController.searchBook(searchMap);
+							if (null != bookDTOList && !bookDTOList.isEmpty()) {
+								UserController.display(bookDTOList , "book");
+							}
+						}
+						
 					}
 					break;
 	
@@ -107,7 +123,15 @@ public class Assignment8Main {
 						ApplicationUtility.displayHorizontalLine();
 						System.out.println("Operation - Search a Subject");
 						ApplicationUtility.displayHorizontalLine();
-//						TODO: ApplicationController.searchSubject(buffer);
+						
+						Map<String , String> searchMap = UserController.getSubjectSearchOptionFromUser(buffer);
+						
+						if (null != searchMap && !searchMap.isEmpty()) {
+							List<SubjectDTO> subjectDTOList = ApplicationController.searchSubject(searchMap);
+							if (null != subjectDTOList && !subjectDTOList.isEmpty()) {
+								UserController.display(subjectDTOList , "subject");
+							}
+						}
 					}
 					break;
 				
@@ -139,178 +163,7 @@ public class Assignment8Main {
 			}
 		}
 	}
-
 	
-	private static SubjectDTO getSubjectFromUser(BufferedReader buffer) throws IOException , NumberFormatException {
-		SubjectDTO subjectDTO = null;
-		String inputStr = null;
-		
-		List<BookDTO> bookDTOList = null;
-		Set<BookDTO> references = null;
-		
-		String[] bookIdArray = null;
-		String booksNotAvailable = "";
-		boolean booksFound = false;
-		
-		try {
-			subjectDTO = new SubjectDTO();
-			
-			// 1. Enter the Subject details :: 
-			System.out.println("Enter the Subject details :: ");
-			do {
-				System.out.print("Enter the Subject Id (only numbers) :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-			} while (!inputStr.matches("[0-9]{1,}"));
-			subjectDTO.setSubjectId(Long.parseLong(inputStr));
-
-			// 2. Enter the Subject sub-title :: 
-			System.out.print("Enter the Subject sub-title :: ");
-			inputStr = buffer.readLine();
-			inputStr = inputStr.trim();
-			subjectDTO.setSubtitle(inputStr);
-			
-			// 3. Enter the Subject Duration in Hours (only numbers) :: 
-			do {
-				System.out.print("Enter the Subject Duration in Hours (only numbers) :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-			} while (!inputStr.matches("[0-9]{1,}"));
-			subjectDTO.setDurationInHours(Integer.parseInt(inputStr));
-			
-			
-			System.out.println("Select the Book references(Book Id) from the menu below (Seperated by semi-colon \";\") :: ");
-			bookDTOList = ApplicationController.getAllBooks();
-			if (bookDTOList != null) {
-				System.out.println("Book Details : ");
-				System.out.println(String.format("%6s\t%20s\t%6s\t%10s\t%s", "ID" , "TITLE" , "PRICE" , "VOLUME" , "PUBLISH DATE"));
-				System.out.println(String.format("%6s\t%20s\t%6s\t%10s\t%s", "------" , "--------------------" , "------" , "----------" , "------------"));
-				
-				bookDTOList.forEach(bookDTO -> System.out.println(
-						String.format("%6s\t%20s\t%6s\t%10s\t%s", 
-						bookDTO.getBookId(),
-						bookDTO.getTitle(),
-						bookDTO.getPrice(),
-						bookDTO.getVolume(),
-						bookDTO.getPublishDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
-						));
-				
-				do {
-					System.out.print("Enter Book ID (only numbers seperated by semi-colon \";\") :- ");
-					inputStr = buffer.readLine();
-					inputStr = inputStr.trim();
-					
-					if (inputStr.matches("[0-9;]{1,}")) {
-						booksNotAvailable = "";
-						bookIdArray = inputStr.split(";");
-						for(int i=0; i < bookIdArray.length; i++){
-							booksFound = false;
-							for(BookDTO bookDTO : bookDTOList) {
-								if(Long.parseLong(bookIdArray[i]) == bookDTO.getBookId()) {
-									booksFound = true;
-								}
-							}
-							if (!booksFound) {
-								booksNotAvailable += ""+bookIdArray[i] + "  " ;
-							}
-						}
-						if (!booksNotAvailable.equals("")) {
-							System.out.println("Book id's that are not found = [ "+booksNotAvailable+"], please select correct books again...");
-							inputStr = "loopAgain";
-						}
-					}
-					
-				} while (!inputStr.matches("[0-9;]{1,}"));
-				
-				
-				references = new LinkedHashSet<BookDTO>();
-				
-				for(int i=0; i < bookIdArray.length; i++){
-					for(BookDTO bookDTO : bookDTOList) {
-						if(Long.parseLong(bookIdArray[i]) == bookDTO.getBookId()) {
-							references.add(bookDTO);
-						}
-					}
-				}
-			} else {
-				references = null;
-			}
-			subjectDTO.setReferences(references);
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			inputStr = null;
-		}
-		
-		return subjectDTO;
-	}
-	private static BookDTO getBookFromUser(BufferedReader buffer) throws IOException , NumberFormatException {
-		BookDTO bookDTO = null;
-		String inputStr = null;
-		
-		try {
-			bookDTO = new BookDTO();
-			System.out.println("Enter details of Book to be added...");
-			// 1. Enter the Book Id (only numbers) :: 
-			do {
-				System.out.print("Enter the Book Id (only numbers) :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-			} while (!inputStr.matches("[0-9]{1,}"));
-			bookDTO.setBookId(Long.parseLong(inputStr));
-			
-			// 2. Enter the Book title :: 
-			System.out.print("Enter the Book title :: ");
-			inputStr = buffer.readLine();
-			inputStr = inputStr.trim();
-			bookDTO.setTitle(inputStr);
-			
-			// 3. Enter the Book price (only numbers [decimal]) :: 
-			do {
-				System.out.print("Enter the Book price (only numbers [decimal]) :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-			} while (!inputStr.matches("^[0-9]+(\\.[0-9]+)?$"));
-			bookDTO.setPrice(Double.parseDouble(inputStr));
-			
-			// 4. Enter the Book Volume (only numbers) :: 
-			do {
-				System.out.print("Enter the Book Volume (only numbers) :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-			} while (!inputStr.matches("[0-9]{1,}"));
-			bookDTO.setVolume(Integer.parseInt(inputStr));
-			
-			do {
-				System.out.print("Enter the Book Publish Date (format = \"dd-MM-yyyy\") :: ");
-				inputStr = buffer.readLine();
-				inputStr = inputStr.trim();
-				
-				if (inputStr.matches("[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]")) {
-					String[] temp = inputStr.split("-");
-					if (!ApplicationUtility.isDateValid(temp[2], temp[1], temp[0])) {
-						inputStr = "loopAgain";
-					}
-				}
-				
-			} while (!inputStr.matches("[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]") );
-			bookDTO.setPublishDate(LocalDate.parse(inputStr , DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			inputStr = null;
-		}
-		return bookDTO;
-	}
-
+	
+	
 }

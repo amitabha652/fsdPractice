@@ -24,7 +24,9 @@ public class DBUtility {
 	
 	// Close a connection
 	public static void closeConnection(Connection conn) throws SQLException {
+		System.out.println("Closing database connection...");
 		conn.close();
+		System.out.println("Connection Closed...");
 	}
 	
 }

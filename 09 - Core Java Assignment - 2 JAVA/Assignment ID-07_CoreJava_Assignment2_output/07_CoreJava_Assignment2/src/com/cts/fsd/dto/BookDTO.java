@@ -79,12 +79,20 @@ public class BookDTO {
 
 	@Override
 	public String toString() {
-		String bookToString = String.format("%6s\t%20s\t%6s\t%10s\t%11s", bookId , title , price , volume , new SimpleDateFormat("dd-MMM-yyyy").format(publishDate));
-		
-		return bookToString;
+		return "BookDTO [bookId=" + bookId + ", title=" + title + ", price=" + price + ", volume=" + volume
+				+ ", publishDate=" + publishDate + "]";
+	}
+
+
+
+	/*@Override
+	public String toString() {
+//		String bookToString = String.format("%6s\t%20s\t%6s\t%10s\t%11s", bookId , title , price , volume , new SimpleDateFormat("dd-MMM-yyyy").format(publishDate));
+//		
+//		return bookToString;
 //		return "Book [bookId=" + bookId + ", title=" + title + ", price="
 //				+ price + ", volume=" + volume + ", publishDate=" + publishDate
 //				+ "]";
-	}
+	}*/
 	
 }

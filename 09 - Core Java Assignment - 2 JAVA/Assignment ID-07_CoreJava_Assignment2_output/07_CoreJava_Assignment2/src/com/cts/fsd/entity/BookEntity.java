@@ -20,12 +20,12 @@ public class BookEntity implements Serializable {
 	
 	private Date publishDate;
 	
+	private long subjectId;
 	
-	
+
 	public long getBookId() {
 		return bookId;
 	}
-
 
 
 	public void setBookId(long bookId) {
@@ -33,11 +33,9 @@ public class BookEntity implements Serializable {
 	}
 
 
-
 	public String getTitle() {
 		return title;
 	}
-
 
 
 	public void setTitle(String title) {
@@ -45,11 +43,9 @@ public class BookEntity implements Serializable {
 	}
 
 
-
 	public double getPrice() {
 		return price;
 	}
-
 
 
 	public void setPrice(double price) {
@@ -57,11 +53,9 @@ public class BookEntity implements Serializable {
 	}
 
 
-
 	public int getVolume() {
 		return volume;
 	}
-
 
 
 	public void setVolume(int volume) {
@@ -69,11 +63,9 @@ public class BookEntity implements Serializable {
 	}
 
 
-
 	public Date getPublishDate() {
 		return publishDate;
 	}
-
 
 
 	public void setPublishDate(Date publishDate) {
@@ -81,15 +73,27 @@ public class BookEntity implements Serializable {
 	}
 
 
+	public long getSubjectId() {
+		return subjectId;
+	}
+
+
+	public void setSubjectId(long subjectId) {
+		this.subjectId = subjectId;
+	}
+
 
 	@Override
 	public String toString() {
-		String bookToString = String.format("%6s\t%20s\t%6s\t%10s\t%11s", bookId , title , price , volume , new SimpleDateFormat("dd-MMM-yyyy").format(publishDate));
-		
-		return bookToString;
-//		return "Book [bookId=" + bookId + ", title=" + title + ", price="
-//				+ price + ", volume=" + volume + ", publishDate=" + publishDate
-//				+ "]";
+		return "BookEntity [bookId=" + bookId + ", title=" + title + ", price=" + price + ", volume=" + volume
+				+ ", publishDate=" + publishDate + ", subjectId=" + subjectId + "]";
 	}
+
+
+//	@Override
+//	public String toString() {
+//		return String.format("%6s\t%20s\t%6s\t%10s\t%11s\t%6s", bookId , title , price , volume , 
+//				new SimpleDateFormat("dd-MMM-yyyy").format(publishDate) , subjectId);
+//	}
 	
 }

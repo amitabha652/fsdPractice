@@ -1,6 +1,7 @@
 package com.cts.fsd.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class SubjectEntity implements Serializable {
 	
@@ -15,7 +16,7 @@ public class SubjectEntity implements Serializable {
 	
 	private int durationInHours;
 	
-	private long bookId;
+	private Set<BookEntity> references;
 
 	public long getSubjectId() {
 		return subjectId;
@@ -41,19 +42,27 @@ public class SubjectEntity implements Serializable {
 		this.durationInHours = durationInHours;
 	}
 
-	public long getBookId() {
-		return bookId;
+	public Set<BookEntity> getReferences() {
+		return references;
 	}
 
-	public void setBookId(long bookId) {
-		this.bookId = bookId;
+	public void setReferences(Set<BookEntity> references) {
+		this.references = references;
 	}
 
 	@Override
 	public String toString() {
-		return "SubjectEntity [subjectId=" + subjectId + ", subtitle="
-				+ subtitle + ", durationInHours=" + durationInHours
-				+ ", bookId=" + bookId + "]";
+		return "SubjectEntity [subjectId=" + subjectId + ", subtitle=" + subtitle + ", durationInHours="
+				+ durationInHours + ", references=" + references + "]";
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) return false;
+	    if (!(obj instanceof SubjectEntity))
+	        return false;
+	    if (obj == this)
+	        return true;
+	    return this.getSubjectId() == ((SubjectEntity) obj).getSubjectId();
+	}
 }
