@@ -1,0 +1,26 @@
+[
+  {
+    "categoryId": 1,
+    "categoryName": "Sprint"
+  },
+  {
+    "categoryId": 2,
+    "categoryName": "Boxing"
+  },
+  {
+    "categoryId": 3,
+    "categoryName": "Cardio"
+  },
+  {
+    "categoryId": 4,
+    "categoryName": "Slow Walk"
+  },
+  {
+    "categoryId": 5,
+    "categoryName": "Fast Walk"
+  },
+  {
+    "categoryId": 6,
+    "categoryName": "Jogging"
+  }
+]

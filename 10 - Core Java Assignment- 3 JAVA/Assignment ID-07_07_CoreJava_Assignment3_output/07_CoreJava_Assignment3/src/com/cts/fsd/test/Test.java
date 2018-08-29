@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.script.ScriptEngineManager;
+
 import com.cts.fsd.dao.ApplicationDAO;
 import com.cts.fsd.util.DBUtility;
 
@@ -70,6 +72,11 @@ public class Test {
     		
     		
     		
+    		
+    		
+    		
+            String myExpression = "true || true && false";
+            System.out.println("Eval(myExpression) = " + new ScriptEngineManager().getEngineByName("JavaScript").eval(myExpression));
     		
     		
     		

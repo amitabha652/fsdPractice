@@ -1,0 +1,54 @@
+{
+  "workoutResponse": [
+    {
+      "workoutId": "1",
+      "category": {
+        "categoryId": "1",
+        "categoryName": "Sprint"
+      },
+      "workoutTitle": "Morning Run for 5 minutes",
+      "workoutNote": "Fast Run",
+      "workoutCalories": "10"
+    },
+    {
+      "workoutId": "2",
+      "category": {
+        "categoryId": "2",
+        "categoryName": "Boxing"
+      },
+      "workoutTitle": "Boxing practice for 10 minutes",
+      "workoutNote": "Stamina Increase",
+      "workoutCalories": "20"
+    },
+    {
+      "workoutId": "3",
+      "category": {
+        "categoryId": "3",
+        "categoryName": "Cardio"
+      },
+      "workoutTitle": "Chest and Tricep workout for 10 minutes",
+      "workoutNote": "Stamina Increase \u0026 Muscle Gain",
+      "workoutCalories": "50"
+    },
+    {
+      "workoutId": "4",
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Slow Walk"
+      },
+      "workoutTitle": "Morning walk for 10 minutes",
+      "workoutNote": "Warm Up",
+      "workoutCalories": "10"
+    },
+    {
+      "workoutId": "5",
+      "category": {
+        "categoryId": "4",
+        "categoryName": "Slow Walk"
+      },
+      "workoutTitle": "Evening walk for 10 minutes",
+      "workoutNote": "Calorie Burn",
+      "workoutCalories": "10"
+    }
+  ]
+}
