@@ -1,13 +1,17 @@
 package com.cts.fsd.tasktracker.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "TASK_TABLE")
 public class TaskEntity implements Serializable {
 
 	/**
@@ -17,17 +21,96 @@ public class TaskEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "TASK_ID")
 	private long taskId;
 	
+	
+	@Column(name = "PARENT_ID")
 	private long parentId;
 	
+	
+	@Column(name = "TASk")
 	private String task;
 	
-	private String startDate;
 	
-	private String endDate;
+	@Column(name = "START_DATE")
+	private Date startDate;
 	
-	private String priority;
+	
+	@Column(name = "END_DATE")
+	private Date endDate;
+	
+	
+	@Column(name = "PRIORITY")
+	private int priority;
+
+
+	public long getTaskId() {
+		return taskId;
+	}
+
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+
+	public long getParentId() {
+		return parentId;
+	}
+
+
+	public void setParentId(long parentId) {
+		this.parentId = parentId;
+	}
+
+
+	public String getTask() {
+		return task;
+	}
+
+
+	public void setTask(String task) {
+		this.task = task;
+	}
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+
+	public int getPriority() {
+		return priority;
+	}
+
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+
+	@Override
+	public String toString() {
+		return "TaskEntity [taskId=" + taskId + ", parentId=" + parentId
+				+ ", task=" + task + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", priority=" + priority + "]";
+	}
 	
 	
 
