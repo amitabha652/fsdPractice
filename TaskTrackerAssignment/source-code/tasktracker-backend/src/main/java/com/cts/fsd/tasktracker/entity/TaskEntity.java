@@ -5,9 +5,12 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,14 +23,13 @@ public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "TASK_ID")
 	private long taskId;
 	
-	
-	@Column(name = "PARENT_ID")
-	private long parentId;
-	
+	@OneToOne(fetch = FetchType.LAZY) 
+	@JoinColumn(name = "PARENT_ID" )
+	private ParentTaskEntity parentTaskEntity;
 	
 	@Column(name = "TASk")
 	private String task;
@@ -55,13 +57,13 @@ public class TaskEntity implements Serializable {
 	}
 
 
-	public long getParentId() {
-		return parentId;
+	public ParentTaskEntity getParentTaskEntity() {
+		return parentTaskEntity;
 	}
 
 
-	public void setParentId(long parentId) {
-		this.parentId = parentId;
+	public void setParentTaskEntity(ParentTaskEntity parentTaskEntity) {
+		this.parentTaskEntity = parentTaskEntity;
 	}
 
 
@@ -107,11 +109,10 @@ public class TaskEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TaskEntity [taskId=" + taskId + ", parentId=" + parentId
-				+ ", task=" + task + ", startDate=" + startDate + ", endDate="
-				+ endDate + ", priority=" + priority + "]";
+		return "TaskEntity [taskId=" + taskId + ", parentTaskEntity=" + parentTaskEntity + ", task=" + task
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", priority=" + priority + "]";
 	}
-	
+
 	
 
 }

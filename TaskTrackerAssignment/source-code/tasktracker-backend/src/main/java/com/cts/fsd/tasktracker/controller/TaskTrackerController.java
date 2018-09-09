@@ -13,143 +13,101 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cts.fsd.tasktracker.entity.Category;
-import com.cts.fsd.tasktracker.entity.Workout;
-import com.cts.fsd.tasktracker.mapper.ObjectMapper;
-import com.cts.fsd.tasktracker.pojo.AllWorkoutsPOJO;
-import com.cts.fsd.tasktracker.pojo.WorkoutPOJO;
-import com.cts.fsd.tasktracker.repo.CategoryRepository;
-import com.cts.fsd.tasktracker.repo.WorkoutRepository;
-import com.cts.fsd.tasktracker.service.CategoryService;
-import com.cts.fsd.tasktracker.service.WorkoutService;
+import com.cts.fsd.tasktracker.pojo.TaskPOJO;
+import com.cts.fsd.tasktracker.service.TaskService;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @RestController
-@RequestMapping("/workout")
+@RequestMapping("/task")
 @CrossOrigin("*")
 public class TaskTrackerController {
 	
 	@Autowired
-	protected ObjectMapper objectMapper;
-	
-	@Autowired
-	CategoryRepository categoryRepository;
-	
-	@Autowired
-	WorkoutRepository workoutRepository;
-	
-	@Autowired
-	WorkoutService workoutService;
-
-	@Autowired
-	CategoryService categoryService;
+	TaskService taskService;
 	
 	
 	@RequestMapping(value = "/create/dump", method = RequestMethod.GET)
-	public ResponseEntity<String> createWorkoutDump() {
-		String allWorkoutsJsonString = "{\"workoutResponse\":[{\"workoutId\":\"1\",	\"categoryId\":\"1\",\"workoutTitle\":\"MorningRunfor5minutes\",\"workoutNote\":\"FastRun\",\"workoutCalories\":\"10\"},{\"workoutId\":\"2\",	\"categoryId\":\"2\",\"workoutTitle\":\"Boxingpracticefor10minutes\",\"workoutNote\":\"StaminaIncrease\",\"workoutCalories\":\"20\"},{\"workoutId\":\"3\",	\"categoryId\":\"3\",\"workoutTitle\":\"ChestandTricepworkoutfor10minutes\",\"workoutNote\":\"StaminaIncrease\u0026MuscleGain\",\"workoutCalories\":\"50\"},{\"workoutId\":\"4\",	\"categoryId\":4,\"workoutTitle\":\"Morningwalkfor10minutes\",\"workoutNote\":\"WarmUp\",\"workoutCalories\":\"10\"},{\"workoutId\":\"5\",	\"categoryId\":\"4\",\"workoutTitle\":\"Eveningwalkfor10minutes\",\"workoutNote\":\"CalorieBurn\",\"workoutCalories\":\"10\"}]}";
+	public ResponseEntity<String> createTaskDump() {
 		Gson gson = new Gson();
-		AllWorkoutsPOJO allWorkoutsPOJO = gson.fromJson(allWorkoutsJsonString , AllWorkoutsPOJO.class);
 		
-		System.out.println("creating data dump in db = " + allWorkoutsPOJO.toString());
-		List<Workout> workoutsEntityList = new ArrayList<Workout>();
+		String taskDump = "[{\"taskId\":11,\"task\":\"TaskName1\",\"parentId\":101,\"parentTask\":\"ParentTaskName1\",\"startDate\":\"Sep 9, 2018 12:00:00 AM\",\"endDate\":\"Sep 9, 2018 12:00:00 AM\",\"priority\":1},{\"taskId\":12,\"task\":\"TaskName2\",\"parentId\":102,\"parentTask\":\"ParentTaskName2\",\"startDate\":\"Sep 9, 2018 12:00:00 AM\",\"endDate\":\"Sep 9, 2018 12:00:00 AM\",\"priority\":2},{\"taskId\":13,\"task\":\"TaskName3\",\"parentId\":101,\"parentTask\":\"ParentTaskName1\",\"startDate\":\"Sep 9, 2018 12:00:00 AM\",\"endDate\":\"Sep 9, 2018 12:00:00 AM\",\"priority\":3},{\"taskId\":14,\"task\":\"TaskName4\",\"parentId\":103,\"parentTask\":\"ParentTaskName3\",\"startDate\":\"Sep 9, 2018 12:00:00 AM\",\"endDate\":\"Sep 9, 2018 12:00:00 AM\",\"priority\":4},{\"taskId\":15,\"task\":\"TaskName5\",\"parentId\":105,\"parentTask\":\"ParentTaskName5\",\"startDate\":\"Sep 9, 2018 12:00:00 AM\",\"endDate\":\"Sep 9, 2018 12:00:00 AM\",\"priority\":5}]";
+		List<TaskPOJO> taskPOJOList = gson.fromJson(taskDump, new TypeToken<List<TaskPOJO>>(){}.getType());
 		
-		if(allWorkoutsPOJO != null 
-				&& allWorkoutsPOJO.getWorkoutResponse() != null 
-				&& !allWorkoutsPOJO.getWorkoutResponse().isEmpty()) {
-			
-			for(WorkoutPOJO workoutPOJO : allWorkoutsPOJO.getWorkoutResponse()) {
-				
-				Category categoryFromDB =  categoryService.getCategoryById(workoutPOJO.getCategoryId());
-				System.out.println("categoryFromDB = " + categoryFromDB.toString());
-				
-				Workout workout = objectMapper.mapWorkoutPojoToEntity(workoutPOJO);
-				if(workout != null ) {
-					workout.setCategory(categoryFromDB);
-				}
-				
-				workoutsEntityList.add(workout);
-				
-			}
-		}
+		// display Task Dump in console
+		taskPOJOList.forEach((pojo)-> {System.out.println(pojo);});
+		System.out.println("creating Task dump in db = " + taskPOJOList.toString());
 		
-		List<Workout> dbResponse = workoutService.createWorkout(workoutsEntityList);
-		
-		return new ResponseEntity<String>("Workouts Saved to Database..." + dbResponse , HttpStatus.OK);
+		List<TaskPOJO> dbResponse = taskService.createTasks(taskPOJOList);
+
+		return new ResponseEntity<String>("Task Dumps Saved to Database..." + dbResponse , HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AllWorkoutsPOJO> listWorkouts() {
-		System.out.println("getting all the workouts from database...");
-		List<Workout> workoutsFromDB = workoutService.getAllWorkouts();
-		List<WorkoutPOJO> workoutList = new ArrayList<WorkoutPOJO>();
+	public ResponseEntity<List<TaskPOJO>> listTasks() {
 		
-		if(workoutsFromDB != null) {
-			for(Workout workout : workoutsFromDB) {
-				WorkoutPOJO workoutPOJO = objectMapper.mapWorkoutEntityToPojo(workout);
-				workoutList.add(workoutPOJO);
-			}
-		}
+		System.out.println("getting all the tasks from database...");
 		
-		AllWorkoutsPOJO allWorkoutsPOJO = new AllWorkoutsPOJO();
-		allWorkoutsPOJO.setWorkoutResponse(workoutList);
+		List<TaskPOJO> tasksFromDB = taskService.getAllTasks();
 		
-		return new ResponseEntity<AllWorkoutsPOJO>(allWorkoutsPOJO , HttpStatus.OK);
+		return new ResponseEntity<List<TaskPOJO>>(tasksFromDB , HttpStatus.OK);
     }
 	
+	
+	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> createWorkout(@RequestBody AllWorkoutsPOJO allWorkoutsPOJO) {
-		System.out.println("allWorkouts coming in request = " + allWorkoutsPOJO.toString());
+	public ResponseEntity<String> createTask(
+							@RequestBody TaskPOJO taskPOJO	) {
 		
-		List<Workout> workoutsEntityList = new ArrayList<Workout>();
+		System.out.println("Task to be added to DB = " + taskPOJO.toString());
 		
-		if(allWorkoutsPOJO != null 
-				&& allWorkoutsPOJO.getWorkoutResponse() != null 
-				&& !allWorkoutsPOJO.getWorkoutResponse().isEmpty()) {
-			
-			for(WorkoutPOJO workoutPOJO : allWorkoutsPOJO.getWorkoutResponse()) {
-				
-				Category categoryFromDB =  categoryService.getCategoryById(workoutPOJO.getCategoryId());
-				System.out.println("categoryFromDB = " + categoryFromDB.toString());
-				
-				Workout workout = objectMapper.mapWorkoutPojoToEntity(workoutPOJO);
-				if(workout != null ) {
-					workout.setCategory(categoryFromDB);
-				}
-				
-				workoutsEntityList.add(workout);
-				
-			}
-		}
+		List<TaskPOJO> taskPOJOList = new ArrayList<TaskPOJO>();
+		taskPOJOList.add(taskPOJO);
 		
-		List<Workout> dbResponse = workoutService.createWorkout(workoutsEntityList);
+		// display Task To be Created in console
+		taskPOJOList.forEach((pojo)-> {System.out.println(pojo);});
 		
-		return new ResponseEntity<String>("Workouts Saved to Database..." + dbResponse , HttpStatus.OK);
+		System.out.println("adding Task to db = " + taskPOJOList.toString());
+		
+		List<TaskPOJO> dbResponse = taskService.createTasks(taskPOJOList);
+		
+		return new ResponseEntity<String>("New Task Saved to Database..." + dbResponse , HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity<String> updateWorkout(@PathVariable(value = "id") int workoutId , 
-												@RequestBody WorkoutPOJO newWorkoutPOJO) {
-		System.out.println("Workout to be updated which is coming in request = " + newWorkoutPOJO.toString());
-		Workout dbResponse = null;
+	public ResponseEntity<String> updateTask(
+												@PathVariable(value = "id") int taskId , 
+												@RequestBody TaskPOJO taskPOJO			) {
 		
-		if (workoutId == newWorkoutPOJO.getWorkoutId()) {
-//			dbResponse = 
-			// write logic in service layer and repo to update values.
+		System.out.println("Task to be updated which is coming in request = " + taskPOJO.toString());
+		
+		TaskPOJO dbResponse = null;
+		if (taskId == taskPOJO.getTaskId()) {
+			dbResponse = taskService.editTaskById(taskId , taskPOJO);
 		}
 		
+		if(dbResponse != null) {
+			return new ResponseEntity<String>("Task[task id = "+taskId+"] Updated in Database..." + dbResponse , HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Task[task id = "+taskId+"] NOT Updated in Database as it does not exist..."  + dbResponse , HttpStatus.OK);
+		}
 		
+	}
+	
+	
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteTask( 
+											@PathVariable(value = "id") int taskId ) {
+
+		boolean dbResponse = taskService.removeTaskById(taskId);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		return new ResponseEntity<String>("Workouts Saved to Database..." + dbResponse , HttpStatus.OK);
+		if(dbResponse) {
+			return new ResponseEntity<String>("ParentTask[parent id = "+taskId+"] Deleted from database..." , HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("ParentTask[parent id = "+taskId+"] Not Deleted from database as it does not exist..." , HttpStatus.OK);
+		}
 	}
 	
 }

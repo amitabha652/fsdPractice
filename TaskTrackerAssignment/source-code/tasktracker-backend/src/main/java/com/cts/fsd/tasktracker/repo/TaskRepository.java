@@ -13,12 +13,7 @@ import com.cts.fsd.tasktracker.entity.TaskEntity;
 
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, Long>{
-	
 
-    @Query("delete from TaskEntity t where t.taskId=:id")
-    public void getAllTaskById(@Param("id") Long taskId);
-	
-	
 	@Transactional
     @Modifying
     @Query("delete from TaskEntity t where t.taskId=:id")
