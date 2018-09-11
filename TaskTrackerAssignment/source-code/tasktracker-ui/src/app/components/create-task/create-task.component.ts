@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { ApiService } from '../../shared/services/api.service';
+
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.css']
+  styleUrls: ['./create-task.component.css'],
+  providers: [ApiService]
 })
 export class CreateTaskComponent implements OnInit {
   parentTasks: any;
@@ -13,21 +16,12 @@ export class CreateTaskComponent implements OnInit {
   maxPriority: number = 30;
   minPriority: number = 0;
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.parentTasks = [{
-      parentId: 101,
-      parentTask: "ParentTask1"
-    },
-    {
-      parentId: 102,
-      parentTask: "ParentTask2"
-    },
-    {
-      parentId: 103,
-      parentTask: "ParentTask3"
-    }];
+   this.apiService.getParentTasks().subscribe(data => {
+    this.parentTasks = this.transform(JSON.parse(data['_body']));
+    });
 
     this.myForm = new FormGroup({
       task: new FormControl('', [ Validators.required, Validators.maxLength(20),  Validators.minLength(2) ]),
@@ -37,9 +31,19 @@ export class CreateTaskComponent implements OnInit {
       edate: new FormControl('', Validators.required)
     });
   }
+
+  transform(response) {
+    const result = [];
+    for (var key in response) {
+      result.push(response[key]);
+    }
+    return result;
+  }
+
   onSubmit() {
     this.submitted = true;
     console.log(this.myForm);
+    this.apiService.createForm(this.myForm).subscribe();
   }
 
 }

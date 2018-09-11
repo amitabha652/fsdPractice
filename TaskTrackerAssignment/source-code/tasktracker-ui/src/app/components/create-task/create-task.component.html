@@ -40,7 +40,7 @@
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                   <select class="form-control" formControlName="parentTask">
-                      <option *ngFor="let task of parentTasks" [value]="task.parentTask" >
+                      <option *ngFor="let task of parentTasks" [value]="task.parentId" >
                         {{task.parentTask}}
                       </option>
                   </select>

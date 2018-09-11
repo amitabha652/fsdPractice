@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { ApiService } from './shared/services/api.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    ApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
