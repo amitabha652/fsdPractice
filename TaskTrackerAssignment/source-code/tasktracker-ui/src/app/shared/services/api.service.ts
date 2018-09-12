@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ApiService {
   baseUrl: string
+  allTasks$: Observable<any>;
 
   constructor(private http: Http) {
     this.baseUrl = 'http://localhost:8080/tasktrackerbackend/';
@@ -27,7 +29,7 @@ export class ApiService {
 
 
   /******* Service Call To Update Existing Task Details *******/
-  udpateTask(form) {
+  updateTask(form, taskId) {
     const formVal = form.value;
     const payload = {
         taskId: formVal.taskId,
@@ -37,11 +39,20 @@ export class ApiService {
         endDate: new Date(formVal.edate).toISOString(),
         priority: formVal.priority
     };
-    return this.http.put(this.baseUrl + 'task/edit/'+payload.taskId, payload);
+    return this.http.put(this.baseUrl + 'task/edit/'+taskId, payload);
   }
 
   getParentTasks() {
     return this.http.get(this.baseUrl + '/parent/list').map(res => res.json());
+  }
+
+  getAllTasks() {
+    this.allTasks$ = this.http.get(this.baseUrl + '/task/list').map(res => res.json());
+    return this.allTasks$;
+  }
+
+  deleteTask(taskId) {
+    return this.http.delete(this.baseUrl + 'task/delete/' + taskId);
   }
 
   getEditTask() {

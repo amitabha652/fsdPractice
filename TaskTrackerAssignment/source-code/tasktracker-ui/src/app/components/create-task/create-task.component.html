@@ -15,7 +15,7 @@
                   </p>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                  <input type="text" class="form-control" formControlName="task"/>
+                  <input type="text" class="form-control" formControlName="task" [(ngModel)]="taskName"/>
                   <span [hidden]="myForm.controls.task.valid || (myForm.controls.task.pristine && !submitted)">Please enter proper Task Name.</span>
               </div>
           </div>
@@ -28,7 +28,7 @@
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                  <span class="minPriority">{{minPriority}}</span>
                  <span class="maxPriority">{{maxPriority}}</span>
-                  <input type="range" [max]="maxPriority" [min]="minPriority" class="form-control" formControlName="priority"/>
+                  <input type="range" [(ngModel)]="priority" [max]="maxPriority" [min]="minPriority" class="form-control" formControlName="priority"/>
                   <span [hidden]="myForm.controls.priority.valid || (myForm.controls.priority.pristine && !submitted)">Please select proper Priority.</span>
               </div>
           </div>
@@ -39,8 +39,8 @@
                   </p>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                  <select class="form-control" formControlName="parentTask">
-                      <option *ngFor="let task of (parentTasks$ | async)" [value]="task.parentId" >
+                  <select class="form-control" formControlName="parentTask" [(ngModel)]="parentTask">
+                      <option *ngFor="let task of (parentTasks$ | async)" [value]="task.parentId">
                         {{task.parentTask}}
                       </option>
                   </select>
@@ -54,7 +54,7 @@
                   </p>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                  <input type="date" class="form-control" formControlName="sdate"/>
+                  <input type="date" class="form-control" formControlName="sdate" [(ngModel)]="startDate"/>
                   <span [hidden]="myForm.controls.sdate.valid || (myForm.controls.sdate.pristine && !submitted)">Please enter proper Start Date.</span>
               </div>
           </div>
@@ -65,11 +65,11 @@
                   </p>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                  <input type="date" class="form-control" formControlName="edate"/>
+                  <input type="date" class="form-control" formControlName="edate" [(ngModel)]="endDate"/>
                   <span [hidden]="myForm.controls.edate.valid || (myForm.controls.edate.pristine && !submitted)">Please enter proper End Date.</span>
               </div>
           </div>
-          <div class="row form-group">
+          <div class="row form-group" *ngIf="!editedTaskId">
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                   <button type="submit" class="btn btn-primary form-control">Add Task</button>
               </div>
@@ -77,6 +77,14 @@
                   <button type="reset" class="btn btn-primary form-control">Reset</button>
               </div>
           </div>
+          <div class="row form-group" *ngIf="editedTaskId">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <button type="submit" class="btn btn-primary form-control">Update Task</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <button type="button" class="btn btn-primary form-control">Cancel</button>
+            </div>
+        </div>
       </div>
       <br>
   </div>

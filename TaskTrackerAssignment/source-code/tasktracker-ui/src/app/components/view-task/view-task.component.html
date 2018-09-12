@@ -1,3 +1,21 @@
-<p>
-  view-task works!
-</p>
+<div *ngFor="let task of (tasks$ | async)">
+  <div class="row heading">
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Task</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Parent</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Priority</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Start</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">End</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></span>
+  </div>
+  <div class="row">
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ task.task }}</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ task.parentTask }}</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ task.priority }}</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ getDate(task.startDate) }}</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ getDate(task.endDate) }}</span>
+    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      <span> <a [routerLink]="['/edit', task.taskId]">Edit</a></span>
+      <span><input type="button" value="End Task" (click)="endTask(task.taskId)"/></span>
+    </span>
+  </div>
+</div>
