@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ApiService {
@@ -10,18 +11,19 @@ export class ApiService {
    }
 
   createForm(form) {
+    const formVal = form.value;
     const payload = {
-        taskId: 17,
-        task: "TaskName71111",
-        parentId: 105,
-        startDate: "2018-09-08T18:30:00.000+0000",
-        endDate: "2018-09-08T18:30:00.000+0000",
-        priority: 10
+        taskId: 16,
+        task: formVal.task,
+        parentId: formVal.parentTask,
+        startDate: new Date(formVal.sdate).toISOString(),
+        endDate: new Date(formVal.edate).toISOString(),
+        priority: formVal.priority
     };
     return this.http.post(this.baseUrl + 'task/create', payload);
   }
 
   getParentTasks() {
-    return this.http.get(this.baseUrl + '/parent/list');
+    return this.http.get(this.baseUrl + '/parent/list').map(res => res.json());
   }
 }

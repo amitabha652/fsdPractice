@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ApiService } from '../../shared/services/api.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-create-task',
@@ -10,7 +11,7 @@ import { ApiService } from '../../shared/services/api.service';
   providers: [ApiService]
 })
 export class CreateTaskComponent implements OnInit {
-  parentTasks: any;
+  parentTasks$: Observable<any>;
   myForm: FormGroup;
   submitted: boolean = false;
   maxPriority: number = 30;
@@ -19,9 +20,7 @@ export class CreateTaskComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-   this.apiService.getParentTasks().subscribe(data => {
-    this.parentTasks = this.transform(JSON.parse(data['_body']));
-    });
+    this.parentTasks$ = this.apiService.getParentTasks();
 
     this.myForm = new FormGroup({
       task: new FormControl('', [ Validators.required, Validators.maxLength(20),  Validators.minLength(2) ]),
@@ -30,14 +29,6 @@ export class CreateTaskComponent implements OnInit {
       sdate: new FormControl('', Validators.required),
       edate: new FormControl('', Validators.required)
     });
-  }
-
-  transform(response) {
-    const result = [];
-    for (var key in response) {
-      result.push(response[key]);
-    }
-    return result;
   }
 
   onSubmit() {
