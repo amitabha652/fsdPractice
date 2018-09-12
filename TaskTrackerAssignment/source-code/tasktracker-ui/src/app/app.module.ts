@@ -5,16 +5,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { ViewTaskComponent } from './components/view-task/view-task.component';
-import { AppRoutingModule } from './app-routing/app-routing.module';
+import { UpdateTaskComponent } from './components/update-task/update-task.component';
+
 import { ApiService } from './shared/services/api.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateTaskComponent,
-    ViewTaskComponent
+    ViewTaskComponent,
+    UpdateTaskComponent
   ],
   imports: [
     BrowserModule,

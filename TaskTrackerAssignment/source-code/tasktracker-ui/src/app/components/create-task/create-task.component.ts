@@ -34,7 +34,7 @@ export class CreateTaskComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.myForm);
-    this.apiService.createForm(this.myForm).subscribe();
+    this.apiService.createTask(this.myForm).subscribe();
   }
 
 }
