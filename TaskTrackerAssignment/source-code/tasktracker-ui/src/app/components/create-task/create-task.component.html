@@ -2,9 +2,12 @@
   <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
           <div class="row">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <p>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
+                  <p *ngIf="!editedTaskId">
                       Add Task
+                  </p>
+                  <p *ngIf="editedTaskId">
+                      Update Task
                   </p>
               </div>
           </div>
@@ -82,7 +85,7 @@
                 <button type="submit" class="btn btn-primary form-control">Update Task</button>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <button type="button" class="btn btn-primary form-control">Cancel</button>
+                <button type="button" class="btn btn-primary form-control" (click)="cancelEdit()">Cancel</button>
             </div>
         </div>
       </div>

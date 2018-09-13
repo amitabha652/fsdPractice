@@ -10,12 +10,19 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { ApiService } from './shared/services/api.service';
+import { UtilService } from './shared/services/util.service';
+import { SearchContentPipe } from './shared/pipes/search-content.pipe';
+import { SearchByTaskPipe } from './shared/pipes/search-by-task.pipe';
+import { SearchByParentPipe } from './shared/pipes/search-by-parent.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateTaskComponent,
-    ViewTaskComponent
+    ViewTaskComponent,
+    SearchContentPipe,
+    SearchByTaskPipe,
+    SearchByParentPipe
   ],
   imports: [
     BrowserModule,
@@ -24,7 +31,8 @@ import { ApiService } from './shared/services/api.service';
     ReactiveFormsModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    UtilService
   ],
   bootstrap: [AppComponent]
 })

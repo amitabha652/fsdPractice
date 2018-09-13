@@ -32,13 +32,14 @@ export class ApiService {
   updateTask(form, taskId) {
     const formVal = form.value;
     const payload = {
-        taskId: formVal.taskId,
+        taskId: taskId,
         task: formVal.task,
         parentId: formVal.parentTask,
         startDate: new Date(formVal.sdate).toISOString(),
         endDate: new Date(formVal.edate).toISOString(),
         priority: formVal.priority
     };
+    console.log(payload);
     return this.http.put(this.baseUrl + 'task/edit/'+taskId, payload);
   }
 

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ApiService } from '../../shared/services/api.service';
+import { UtilService } from '../../shared/services/util.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 
@@ -26,8 +28,11 @@ export class CreateTaskComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private utilService: UtilService,
+    private router: Router,
     route: ActivatedRoute) {
       this.editedTaskId = route.snapshot.params['id'];
+      console.log(route);
     }
 
   ngOnInit() {
@@ -45,8 +50,8 @@ export class CreateTaskComponent implements OnInit {
         this.taskName = editedTask.task;
         this.priority = editedTask.priority;
         this.parentTask = editedTask.parentId;
-        this.startDate = this.getDate(editedTask.startDate);
-        this.endDate =  this.getDate(editedTask.endDate);
+        this.startDate = this.utilService.getDate(editedTask.startDate);
+        this.endDate =  this.utilService.getDate(editedTask.endDate);
         console.log(this.startDate);
       });
     }
@@ -55,27 +60,18 @@ export class CreateTaskComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.editedTaskId) {
-      this.apiService.updateTask(this.myForm, this.editedTaskId).subscribe();
+      this.apiService.updateTask(this.myForm, this.editedTaskId).subscribe(() => {
+        this.router.navigateByUrl('view');
+      });
     } else {
-      this.apiService.createTask(this.myForm).subscribe();
+      this.apiService.createTask(this.myForm).subscribe(() => {
+        this.router.navigateByUrl('view');
+      });
     }
   }
 
-  getDate(isoDate) {
-    const date = new Date(isoDate);
-    //yyyy-MM-dd
-    const month = date.getMonth() + 1;
-    let newMonth = '';
-    const taskDate = date.getDate();
-    let newDate = '';
-    if(month < 10) {
-      newMonth = '0' + month;
-    }
-
-    if(taskDate < 10) {
-      newDate = '0' + taskDate;
-    }
-    return date.getFullYear()+'-' + newMonth + '-'+newDate;
+  cancelEdit() {
+    this.router.navigateByUrl('view');
   }
 
 }
