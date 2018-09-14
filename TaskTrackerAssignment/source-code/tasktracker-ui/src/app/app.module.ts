@@ -12,17 +12,13 @@ import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { ApiService } from './shared/services/api.service';
 import { UtilService } from './shared/services/util.service';
 import { SearchContentPipe } from './shared/pipes/search-content.pipe';
-import { SearchByTaskPipe } from './shared/pipes/search-by-task.pipe';
-import { SearchByParentPipe } from './shared/pipes/search-by-parent.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateTaskComponent,
     ViewTaskComponent,
-    SearchContentPipe,
-    SearchByTaskPipe,
-    SearchByParentPipe
+    SearchContentPipe
   ],
   imports: [
     BrowserModule,
