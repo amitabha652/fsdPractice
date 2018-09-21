@@ -19,6 +19,7 @@ public class DBUtility {
 				ApplicationConstants.DB_USER,
 				ApplicationConstants.DB_PASSWORD );
 
+		System.out.println("ApplicationConstants.DB_URL + ApplicationConstants.DB_NAME = " + ApplicationConstants.DB_URL + ApplicationConstants.DB_NAME);
 		return conn;
 	}
 	

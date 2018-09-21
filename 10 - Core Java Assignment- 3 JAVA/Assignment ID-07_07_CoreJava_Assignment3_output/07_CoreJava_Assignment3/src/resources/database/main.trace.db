@@ -1025,3 +1025,92 @@ org.h2.jdbc.JdbcSQLException: Column "IS_GENERATEDCOLUMN" not found [42122-197]
 	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetJobDataRead.run(ResultSetJobDataRead.java:91)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:95)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:60)
+2018-09-21 15:09:24 jdbc[9]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SCRIPT SIMPLE BOOK_TABLE[*]
+"; SQL statement:
+SCRIPT SIMPLE BOOK_TABLE
+ [42000-197]
+2018-09-21 15:16:49 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:733)
+	at org.h2.server.web.WebApp.test(WebApp.java:892)
+	at org.h2.server.web.WebApp.process(WebApp.java:221)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:170)
+	at org.h2.server.web.WebThread.process(WebThread.java:134)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2018-09-21 15:16:54 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:733)
+	at org.h2.server.web.WebApp.test(WebApp.java:892)
+	at org.h2.server.web.WebApp.process(WebApp.java:221)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:170)
+	at org.h2.server.web.WebThread.process(WebThread.java:134)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/GitRepo/fsd/fsdPractice/10 - Core Java Assignment- 3 JAVA/Assignment ID-07_07_CoreJava_Assignment3_output/07_CoreJava_Assignment3/src/resources/database/main.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2018-09-21 15:41:50 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-197]
+2018-09-21 15:49:45 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-197]
+2018-09-21 15:51:21 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-197]
