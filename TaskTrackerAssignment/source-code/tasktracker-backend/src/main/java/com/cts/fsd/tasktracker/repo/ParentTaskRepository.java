@@ -11,10 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cts.fsd.tasktracker.entity.ParentTaskEntity;
 
 
+/**
+ * @author Amitabha Das [420652]
+ *
+ */
 @Repository
 public interface ParentTaskRepository extends JpaRepository<ParentTaskEntity, Long>{
 	
 	
+	/**
+	 * Deletes a specific ParentTask Record from the Task Table based on a parent id
+	 * @param parentId
+	 */
 	@Transactional
     @Modifying
     @Query("delete from ParentTaskEntity p where p.parentId=:id")

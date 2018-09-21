@@ -13,16 +13,31 @@ import com.cts.fsd.tasktracker.mapper.TaskTrackerMapper;
 import com.cts.fsd.tasktracker.pojo.ParentTaskPOJO;
 import com.cts.fsd.tasktracker.repo.ParentTaskRepository;
 
+/**
+ * @author Amitabha Das [420652]
+ * ParentTaskService interacts between the controller and the datasources using jpa repository
+ */
 @Service
 public class ParentTaskService {
 	
+	/**
+	 * object TaskTrackerMapper mapper
+	 */
 	@Autowired
 	protected TaskTrackerMapper mapper;
 	
+	/**
+	 * object ParentTaskRepository parentTaskRepository
+	 */
 	@Autowired
 	protected ParentTaskRepository parentTaskRepository;
 	
 	
+	/**
+	 * createParentTasks() is used to create a parent task in the db that is sent in the request
+	 * @param parentTaskPOJOList
+	 * @return List<ParentTaskPOJO>
+	 */
 	public List<ParentTaskPOJO> createParentTasks(List<ParentTaskPOJO> parentTaskPOJOList){
 		List<ParentTaskEntity> parentTaskEntityList = new ArrayList<ParentTaskEntity>();
 		List<ParentTaskPOJO> returnPojoList = new ArrayList<ParentTaskPOJO>();
@@ -48,6 +63,10 @@ public class ParentTaskService {
 		return returnPojoList;
 	}
 	
+	/**
+	 * getAllParentTasks() is used to get all the records in the Parent Task table
+	 * @return List<ParentTaskPOJO>
+	 */
 	public List<ParentTaskPOJO> getAllParentTasks(){
 		
 		List<ParentTaskEntity> dbResponse = parentTaskRepository.findAll();
@@ -65,6 +84,11 @@ public class ParentTaskService {
 	}
 	
 	
+	/**
+	 * getParentTaskById() is used to get the parent task record from db based on parent id
+	 * @param parentId
+	 * @return ParentTaskEntity
+	 */
 	public ParentTaskEntity getParentTaskById(int parentId){
 		
 		ParentTaskEntity parentTaskFromDB = null;
@@ -85,6 +109,12 @@ public class ParentTaskService {
 	
 	
 	
+	/**
+	 * editParentTaskById() is used to update a parent task in db
+	 * @param parentId
+	 * @param parentTaskPOJO
+	 * @return ParentTaskPOJO
+	 */
 	public ParentTaskPOJO editParentTaskById(int parentId , ParentTaskPOJO parentTaskPOJO){
 		String editResponse = "";
 		ParentTaskEntity parentTaskFromDB = null ;
@@ -114,6 +144,11 @@ public class ParentTaskService {
 		return returnPOJO;
 	}
 
+	/**
+	 * removeParentTaskById() is used to remove a parent task based on parent id
+	 * @param parentId
+	 * @return boolean
+	 */
 	public boolean removeParentTaskById(int parentId) {
 		String deleteResponse = "";
 		ParentTaskEntity parentTaskFromDB = null;

@@ -14,18 +14,36 @@ import com.cts.fsd.tasktracker.mapper.TaskTrackerMapper;
 import com.cts.fsd.tasktracker.pojo.TaskPOJO;
 import com.cts.fsd.tasktracker.repo.TaskRepository;
 
+/**
+ * @author Amitabha Das [420652]
+ * TaskService interacts between the controller and the datasources using jpa repository
+ */
 @Service
 public class TaskService {
 	
+	/**
+	 * Object TaskTrackerMapper mapper
+	 */
 	@Autowired
 	protected TaskTrackerMapper mapper;
 	
+	/**
+	 * Object TaskRepository taskRepository
+	 */
 	@Autowired
 	protected TaskRepository taskRepository;
 	
+	/**
+	 * Object ParentTaskService parentTaskService
+	 */
 	@Autowired
 	protected ParentTaskService parentTaskService;
 	
+	/**
+	 * createTasks() is used to create a task record in the task table sent in the request
+	 * @param taskPOJOList
+	 * @return List<TaskPOJO>
+	 */
 	public List<TaskPOJO> createTasks(List<TaskPOJO> taskPOJOList){
 		List<TaskEntity> taskEntityList = new ArrayList<TaskEntity>();
 		List<TaskPOJO> returnPojoList = new ArrayList<TaskPOJO>();
@@ -58,6 +76,10 @@ public class TaskService {
 	}
 
 
+	/**
+	 * getAllTasks() is used to get all the records in task table 
+	 * @return List<TaskPOJO>
+	 */
 	public List<TaskPOJO> getAllTasks() {
 		
 		List<TaskEntity> dbResponse = taskRepository.findAll();
@@ -75,6 +97,12 @@ public class TaskService {
 	}
 
 
+	/**
+	 * editTaskById() is used to update a task record in db for a particular task id
+	 * @param taskId
+	 * @param taskPOJO
+	 * @return TaskPOJO
+	 */
 	public TaskPOJO editTaskById(int taskId, TaskPOJO taskPOJO) {
 		String editResponse = "";
 		TaskEntity taskFromDB = null ;
@@ -119,6 +147,11 @@ public class TaskService {
 	}
 
 
+	/**
+	 * getTaskById() is used to get a record from the db based on the task id
+	 * @param taskId
+	 * @return TaskEntity
+	 */
 	private TaskEntity getTaskById(int taskId) {
 		TaskEntity taskFromDB = null;
 		
@@ -137,6 +170,11 @@ public class TaskService {
 	}
 
 
+	/**
+	 * removeTaskById() is used to delete a record based on task id from the db
+	 * @param taskId
+	 * @return boolean
+	 */
 	public boolean removeTaskById(int taskId) {
 		String deleteResponse = "";
 		TaskEntity taskFromDB = null;

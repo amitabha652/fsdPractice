@@ -7,9 +7,18 @@ import com.cts.fsd.tasktracker.entity.TaskEntity;
 import com.cts.fsd.tasktracker.pojo.ParentTaskPOJO;
 import com.cts.fsd.tasktracker.pojo.TaskPOJO;
 
+/**
+ * @author Amitabha Das [420652]
+ * Mapper Class to map entity and pojo with each other
+ */
 @Component
 public class TaskTrackerMapper {
 	
+	/**
+	 * methodName() is used to map PARENT TASK POJO TO PARENT TASK ENTITY
+	 * @param parentTaskPOJO
+	 * @return
+	 */
 	public ParentTaskEntity mapParentTaskPojoToEntity (ParentTaskPOJO parentTaskPOJO){
 		ParentTaskEntity parentTaskEntity = new ParentTaskEntity();
 		
@@ -22,6 +31,11 @@ public class TaskTrackerMapper {
 	}
 	
 	
+	/**
+	 * methodName() is used to map PARENTTASK ENTITY TO PARENT TASK POJO
+	 * @param parentTaskEntity
+	 * @return
+	 */
 	public ParentTaskPOJO mapParentTaskEntityToPojo (ParentTaskEntity parentTaskEntity){
 		ParentTaskPOJO parentTaskPOJO = new ParentTaskPOJO();
 		
@@ -33,6 +47,11 @@ public class TaskTrackerMapper {
 		return parentTaskPOJO;
 	}
 	
+	/**
+	 * methodName() is used to map TASK POJO TO TASK ENTITY
+	 * @param taskPOJO
+	 * @return
+	 */
 	public TaskEntity mapTaskPojoToEntity (TaskPOJO taskPOJO){
 		TaskEntity taskEntity = new TaskEntity();
 //		ParentTaskEntity parentTaskEntity = new ParentTaskEntity();
@@ -54,6 +73,11 @@ public class TaskTrackerMapper {
 		return taskEntity;
 	}
 	
+	/**
+	 * mapTaskEntityToPojo() is used to map TASK ENTITY TO TASK POJO
+	 * @param taskEntity
+	 * @return
+	 */
 	public TaskPOJO mapTaskEntityToPojo (TaskEntity taskEntity){
 		TaskPOJO taskPOJO = new TaskPOJO();
 		

@@ -3,19 +3,17 @@
  */
 package com.cts.fsd.tasktracker.test;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 
 /**
- * @author Amitabha Das Local
- *
+ * @author Amitabha Das [420652]
+ * TestClass is used to perform POC work
  */
 public class TestClass {
 
 	/**
+	 * main() method is perform rough work within the application for any POC or Test purpose
 	 * @param args
 	 * @throws ParseException 
 	 * @throws IOException 

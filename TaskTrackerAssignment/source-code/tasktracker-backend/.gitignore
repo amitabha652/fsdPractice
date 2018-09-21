@@ -3,7 +3,10 @@
 !gradle/wrapper/gradle-wrapper.jar
 
 
-/target/
+target/*
+!target/*.war
+
+
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
