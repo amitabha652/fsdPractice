@@ -9,7 +9,12 @@ export class ApiService {
   allTasks$: Observable<any>;
 
   constructor(private http: Http) {
-    this.baseUrl = 'http://localhost:8080/tasktrackerbackend/';
+    const appProto = window.location.href.split('/')[0];
+    const appDNS = window.location.href.split('/')[2];
+    const appPORT = ':8080';
+
+    const locationUrl = appProto + '//' + appDNS.split(':')[0] + appPORT;
+    this.baseUrl = locationUrl + '/tasktrackerbackend/';
    }
 
   /******* Service Call To CREATE New Task Details *******/
@@ -44,11 +49,11 @@ export class ApiService {
   }
 
   getParentTasks() {
-    return this.http.get(this.baseUrl + '/parent/list').map(res => res.json());
+    return this.http.get(this.baseUrl + 'parent/list').map(res => res.json());
   }
 
   getAllTasks() {
-    this.allTasks$ = this.http.get(this.baseUrl + '/task/list').map(res => res.json());
+    this.allTasks$ = this.http.get(this.baseUrl + 'task/list').map(res => res.json());
     return this.allTasks$;
   }
 
