@@ -17,6 +17,7 @@ public class SubjectEntity implements Serializable {
 	private int durationInHours;
 	
 	private Set<BookEntity> references;
+	
 
 	public long getSubjectId() {
 		return subjectId;
@@ -50,12 +51,13 @@ public class SubjectEntity implements Serializable {
 		this.references = references;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "SubjectEntity [subjectId=" + subjectId + ", subtitle=" + subtitle + ", durationInHours="
 				+ durationInHours + ", references=" + references + "]";
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 	    if (obj == null) return false;

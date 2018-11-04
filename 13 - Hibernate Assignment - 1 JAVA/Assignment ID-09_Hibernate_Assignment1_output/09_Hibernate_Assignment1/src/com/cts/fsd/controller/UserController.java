@@ -93,11 +93,13 @@ public class UserController {
 			subjectDTOToBeDeleted = new SubjectDTO();
 			subjectDTOList = ApplicationController.getAllSubjects();
 			if (null != subjectDTOList) {
-				System.out.println("Showing all existing Books...");
+				System.out.println("Showing all existing Subjects...");
 				System.out.println("Subject Details : ");
 				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "ID" , "TITLE" , "Duration" , "Books To Refer"));
 				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "------" , "--------------------" , "--------" , "--------------"));
 				for(SubjectDTO subjectDTOTemp : subjectDTOList) {
+					booksToBeReferred = null;
+					
 					if(null != subjectDTOTemp.getReferences() && !subjectDTOTemp.getReferences().isEmpty()) {
 						StringBuffer bookBuffer = new StringBuffer();
 						subjectDTOTemp.getReferences().forEach(book -> bookBuffer.append(book.getTitle() + "; "));
@@ -129,7 +131,7 @@ public class UserController {
 			}
 			
 			if (subjectFound) {
-				System.out.println("Subject with subject Id ["+subjectId+"] going to be deleted...");
+				System.out.println("Subject with subject Id ["+subjectDTOToBeDeleted.getSubjectId()+"] is going to be deleted...");
 			} else {
 				subjectDTOToBeDeleted = null;
 				System.out.println("Subject with subject Id ["+subjectId+"] will not be deleted as subject is not found...");
@@ -144,6 +146,41 @@ public class UserController {
 		return subjectDTOToBeDeleted;
 	}
 	
+	public static SubjectDTO getSubjectDetailsFromUserNew(BufferedReader buffer) throws IOException , NumberFormatException {
+		SubjectDTO subjectDTO = null;
+		String inputStr = null;
+		
+		try {
+			subjectDTO = new SubjectDTO();
+
+			// 2. Enter the Subject sub-title :: 
+			System.out.print("Enter the Subject sub-title :: ");
+			inputStr = buffer.readLine();
+			inputStr = inputStr.trim();
+			subjectDTO.setSubtitle(inputStr);
+			
+			// 3. Enter the Subject Duration in Hours (only numbers) :: 
+			do {
+				System.out.print("Enter the Subject Duration in Hours (only numbers) :: ");
+				inputStr = buffer.readLine();
+				inputStr = inputStr.trim();
+			} while (!inputStr.matches("[0-9]{1,}"));
+			subjectDTO.setDurationInHours(Integer.parseInt(inputStr));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			inputStr = null;
+		}
+		
+		return subjectDTO;
+	}
+	
+	
+	
+	
+	
+	// Not Needed
 	public static SubjectDTO getSubjectDetailsFromUser(BufferedReader buffer) throws IOException , NumberFormatException {
 		SubjectDTO subjectDTO = null;
 		String inputStr = null;
@@ -253,6 +290,130 @@ public class UserController {
 		return subjectDTO;
 	}
 	
+	public static BookDTO getBookDetailsFromUserNew(BufferedReader buffer) throws IOException , NumberFormatException {
+		List<SubjectDTO> subjectDTOList = null;		
+		BookDTO bookDTO = null;
+		String inputStr = null;
+		
+		try {
+			bookDTO = new BookDTO();
+			System.out.println("Enter details of Book to be added...");
+			/*// 1. Enter the Book Id (only numbers) :: 
+			do {
+				System.out.print("Enter the Book Id (only numbers) :: ");
+				inputStr = buffer.readLine();
+				inputStr = inputStr.trim();
+			} while (!inputStr.matches("[0-9]{1,}"));
+			bookDTO.setBookId(Long.parseLong(inputStr));*/
+			
+			// 2. Enter the Book title :: 
+			System.out.print("Enter the Book title :: ");
+			inputStr = buffer.readLine();
+			inputStr = inputStr.trim();
+			bookDTO.setTitle(inputStr);
+			
+			// 3. Enter the Book price (only numbers [decimal]) :: 
+			do {
+				System.out.print("Enter the Book price (only numbers [decimal]) :: ");
+				inputStr = buffer.readLine();
+				inputStr = inputStr.trim();
+			} while (!inputStr.matches("^[0-9]+(\\.[0-9]+)?$"));
+			bookDTO.setPrice(Double.parseDouble(inputStr));
+			
+			// 4. Enter the Book Volume (only numbers) :: 
+			do {
+				System.out.print("Enter the Book Volume (only numbers) :: ");
+				inputStr = buffer.readLine();
+				inputStr = inputStr.trim();
+			} while (!inputStr.matches("[0-9]{1,}"));
+			bookDTO.setVolume(Integer.parseInt(inputStr));
+			
+			// 5. Enter the Book Publish Date (format = \"dd-MM-yyyy\") :: 
+			do {
+				System.out.print("Enter the Book Publish Date (format = \"dd-MM-yyyy\") :: ");
+				inputStr = buffer.readLine();
+				inputStr = inputStr.trim();
+				
+				if (inputStr.matches("[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]")) {
+					String[] temp = inputStr.split("-");
+					if (!ApplicationUtility.isDateValid(temp[2], temp[1], temp[0])) {
+						inputStr = "loopAgain";
+					}
+				}
+				
+			} while (!inputStr.matches("[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]") );
+			bookDTO.setPublishDate(LocalDate.parse(inputStr , DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+			
+			
+			// 6. Enter the Subject Details 
+			SubjectDTO subjectDTOToBeSelected = null;
+			String booksToBeReferred = null;
+			boolean subjectFound = false;
+			long subjectId = 0;
+			
+			System.out.println("Select the Subject Id that the Book belongs to from the menu below :: ");
+			subjectDTOList = ApplicationController.getAllSubjects();
+			if (null != subjectDTOList) {
+				System.out.println("Showing all existing Books...");
+				System.out.println("Subject Details : ");
+				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "ID" , "TITLE" , "Duration" , "Books To Refer"));
+				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "------" , "--------------------" , "--------" , "--------------"));
+				for(SubjectDTO subjectDTOTemp : subjectDTOList) {
+					booksToBeReferred = null;
+					if(null != subjectDTOTemp.getReferences() && !subjectDTOTemp.getReferences().isEmpty()) {
+						StringBuffer bookBuffer = new StringBuffer();
+						subjectDTOTemp.getReferences().forEach(book -> bookBuffer.append(book.getTitle() + "; "));
+						booksToBeReferred = "["+new StringBuffer().append(bookBuffer.toString().substring(0 , bookBuffer.toString().lastIndexOf("; "))).toString()+"]";
+					}
+					System.out.println(String.format("%6s\t%20s\t%8s\t%s" , subjectDTOTemp.getSubjectId() , subjectDTOTemp.getSubtitle() , subjectDTOTemp.getDurationInHours() , (null != booksToBeReferred) ? booksToBeReferred : "No Books Added"));
+				}
+				
+				do {
+					System.out.print("Select the Subject Id related to the Book (only numbers) ::");
+					inputStr = buffer.readLine();
+					inputStr = inputStr.trim();
+				} while (!inputStr.matches("[0-9]{1,}"));
+				subjectId = Long.parseLong(inputStr);
+				
+				
+				for(SubjectDTO subjectDTOTemp : subjectDTOList) {
+					if (subjectDTOTemp.getSubjectId() == subjectId) {
+						subjectFound = true;
+						subjectDTOToBeSelected = subjectDTOTemp;
+						break;
+					} else {
+						subjectFound = false;
+					}
+				}
+			} else {
+				System.out.println("No Subjects, Database is empty...");
+				subjectFound = false;
+			}
+			
+			if (subjectFound) {
+				bookDTO.setSubjectDTO(subjectDTOToBeSelected);
+				System.out.println("Subject with subject Id ["+subjectDTOToBeSelected.getSubjectId()+"] is selected for the Book = " + bookDTO );
+			} else {
+				System.out.println("Subject with subject Id ["+subjectId+"] will not be added as subject is not found...");
+			}
+			
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			inputStr = null;
+		}
+		return bookDTO;
+	}
+	
+	
+	
+	
+	
+	// Not Needed
 	public static BookDTO getBookDetailsFromUser(BufferedReader buffer) throws IOException , NumberFormatException {
 		BookDTO bookDTO = null;
 		String inputStr = null;
@@ -463,38 +624,45 @@ public class UserController {
 				
 				List<BookDTO> bookDTOList = (List<BookDTO>) dtoList;
 				
-				System.out.println("Book Details : ");
-				System.out.println(String.format("%6s\t%40s\t%6s\t%10s\t%s", "ID" , "TITLE" , "PRICE" , "VOLUME" , "PUBLISH DATE"));
-				System.out.println(String.format("%6s\t%40s\t%6s\t%10s\t%s", "------" , "--------------------" , "------" , "----------" , "------------"));
-				
-				bookDTOList.forEach(bookDTO -> System.out.println(
-						String.format("%6s\t%40s\t%6s\t%10s\t%s", 
-						bookDTO.getBookId(),
-						bookDTO.getTitle(),
-						bookDTO.getPrice(),
-						bookDTO.getVolume(),
-						bookDTO.getPublishDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
-						));
+				if (!bookDTOList.isEmpty()) {
+					System.out.println("Book Details : ");
+					System.out.println(String.format("%6s\t%40s\t%6s\t%10s\t%s", "ID" , "TITLE" , "PRICE" , "VOLUME" , "PUBLISH DATE"));
+					System.out.println(String.format("%6s\t%40s\t%6s\t%10s\t%s", "------" , "--------------------" , "------" , "----------" , "------------"));
+					
+					bookDTOList.forEach(bookDTO -> System.out.println(
+							String.format("%6s\t%40s\t%6s\t%10s\t%s", 
+							bookDTO.getBookId(),
+							bookDTO.getTitle(),
+							bookDTO.getPrice(),
+							bookDTO.getVolume(),
+							bookDTO.getPublishDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+							));
+				}
 				
 			} else if (listType.equalsIgnoreCase("subject")) {
 				
 				List<SubjectDTO> subjectDTOList = (List<SubjectDTO>) dtoList;
 				String booksToBeReferred = null;
 				
-				System.out.println("Subject Details : ");
-				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "ID" , "TITLE" , "Duration" , "Books To Refer"));
-				System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "------" , "--------------------" , "--------" , "--------------"));
-				for(SubjectDTO subjectDTOTemp : subjectDTOList) {
-					if(null != subjectDTOTemp.getReferences() && !subjectDTOTemp.getReferences().isEmpty()) {
-						StringBuffer bookBuffer = new StringBuffer();
-						subjectDTOTemp.getReferences().forEach(book -> bookBuffer.append(book.getTitle() + "; "));
-						booksToBeReferred = "["+new StringBuffer().append(bookBuffer.toString().substring(0 , bookBuffer.toString().lastIndexOf("; "))).toString()+"]";
+				if(!subjectDTOList.isEmpty()) {
+					System.out.println("Subject Details : ");
+					System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "ID" , "TITLE" , "Duration" , "Books To Refer"));
+					System.out.println(String.format("%6s\t%20s\t%8s\t%s" , "------" , "--------------------" , "--------" , "--------------"));
+					for(SubjectDTO subjectDTOTemp : subjectDTOList) {
+						booksToBeReferred = null;
+						
+						if(null != subjectDTOTemp.getReferences() && !subjectDTOTemp.getReferences().isEmpty()) {
+							StringBuffer bookBuffer = new StringBuffer();
+							subjectDTOTemp.getReferences().forEach(book -> bookBuffer.append(book.getTitle() + "; "));
+							booksToBeReferred = "["+new StringBuffer().append(bookBuffer.toString().substring(0 , bookBuffer.toString().lastIndexOf("; "))).toString()+"]";
+						}
+						System.out.println(String.format("%6s\t%20s\t%8s\t%s" , 
+								subjectDTOTemp.getSubjectId() , 
+								subjectDTOTemp.getSubtitle() , 
+								subjectDTOTemp.getDurationInHours() , 
+								(null != booksToBeReferred) ? booksToBeReferred : "No Books Selected"));
 					}
-					System.out.println(String.format("%6s\t%20s\t%8s\t%s" , 
-							subjectDTOTemp.getSubjectId() , 
-							subjectDTOTemp.getSubtitle() , 
-							subjectDTOTemp.getDurationInHours() , 
-							booksToBeReferred));
+					
 				}
 				
 			}

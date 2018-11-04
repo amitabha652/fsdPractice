@@ -1,5 +1,6 @@
 package com.cts.fsd.mapper;
 
+import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -86,7 +87,11 @@ public class ObjectMappper {
 			bookEntity.setTitle(bookDTO.getTitle());
 			bookEntity.setPrice(bookDTO.getPrice());
 			bookEntity.setVolume(bookDTO.getVolume());
-			bookEntity.setPublishDate(java.sql.Date.valueOf( bookDTO.getPublishDate() ));
+			bookEntity.setPublishDate(Date.valueOf(bookDTO.getPublishDate()));
+			
+			SubjectEntity subjectEntity = mapPojoToEntity(bookDTO.getSubjectDTO());
+			
+			bookEntity.setSubjectEntity(subjectEntity);
 		}
 		return bookEntity;
 		

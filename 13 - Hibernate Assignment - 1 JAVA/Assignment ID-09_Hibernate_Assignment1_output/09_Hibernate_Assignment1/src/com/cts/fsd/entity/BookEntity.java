@@ -23,11 +23,23 @@ public class BookEntity implements Serializable {
 	
 	private SubjectEntity subjectEntity;
 
-	public long getBookId() {
-		return bookId;
+	
+	
+	public BookEntity() { }
+	
+	public BookEntity(String title, double price, int volume, Date publishDate, long subjectId) {
+//		super();
+		this.title = title;
+		this.price = price;
+		this.volume = volume;
+		this.publishDate = publishDate;
+		this.subjectId = subjectId;
 	}
 
 
+	public long getBookId() {
+		return bookId;
+	}
 	public void setBookId(long bookId) {
 		this.bookId = bookId;
 	}
@@ -36,18 +48,14 @@ public class BookEntity implements Serializable {
 	public String getTitle() {
 		return title;
 	}
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
+	
+	
 	public double getPrice() {
 		return price;
 	}
-
-
 	public void setPrice(double price) {
 		this.price = price;
 	}
@@ -56,8 +64,6 @@ public class BookEntity implements Serializable {
 	public int getVolume() {
 		return volume;
 	}
-
-
 	public void setVolume(int volume) {
 		this.volume = volume;
 	}
@@ -66,8 +72,6 @@ public class BookEntity implements Serializable {
 	public Date getPublishDate() {
 		return publishDate;
 	}
-
-
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
@@ -76,18 +80,14 @@ public class BookEntity implements Serializable {
 	public long getSubjectId() {
 		return subjectId;
 	}
-
-
 	public void setSubjectId(long subjectId) {
 		this.subjectId = subjectId;
 	}
 
-
+	
 	public SubjectEntity getSubjectEntity() {
 		return subjectEntity;
 	}
-
-
 	public void setSubjectEntity(SubjectEntity subjectEntity) {
 		this.subjectEntity = subjectEntity;
 	}
@@ -96,11 +96,8 @@ public class BookEntity implements Serializable {
 	@Override
 	public String toString() {
 		return "BookEntity [bookId=" + bookId + ", title=" + title + ", price=" + price + ", volume=" + volume
-				+ ", publishDate=" + publishDate + ", subjectId=" + subjectId + ", subjectEntity=" + subjectEntity
-				+ "]";
+				+ ", publishDate=" + publishDate + ", subjectId=" + subjectId + "]";
 	}
 
-
-	
 
 }

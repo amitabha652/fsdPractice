@@ -1,6 +1,5 @@
 package com.cts.fsd.dto;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class BookDTO {
@@ -15,75 +14,60 @@ public class BookDTO {
 	
 	private LocalDate publishDate;
 	
+	private SubjectDTO subjectDTO;
 	
 	
 	public long getBookId() {
 		return bookId;
 	}
-
-
-
 	public void setBookId(long bookId) {
 		this.bookId = bookId;
 	}
 
-
-
 	public String getTitle() {
 		return title;
 	}
-
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
-
 	public double getPrice() {
 		return price;
 	}
-
-
-
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
-
-
 	public int getVolume() {
 		return volume;
 	}
-
-
-
 	public void setVolume(int volume) {
 		this.volume = volume;
 	}
 
-
-
 	public LocalDate getPublishDate() {
 		return publishDate;
 	}
-
-
-
 	public void setPublishDate(LocalDate publishDate) {
 		this.publishDate = publishDate;
 	}
 
-
-
+	public SubjectDTO getSubjectDTO() {
+		return subjectDTO;
+	}
+	public void setSubjectDTO(SubjectDTO subjectDTO) {
+		this.subjectDTO = subjectDTO;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "BookDTO [bookId=" + bookId + ", title=" + title + ", price=" + price + ", volume=" + volume
-				+ ", publishDate=" + publishDate + "]";
+				+ ", publishDate=" + publishDate + ", subjectDTO=" + subjectDTO + "]";
 	}
-
-
+	
+	
+	
 
 	/*@Override
 	public String toString() {

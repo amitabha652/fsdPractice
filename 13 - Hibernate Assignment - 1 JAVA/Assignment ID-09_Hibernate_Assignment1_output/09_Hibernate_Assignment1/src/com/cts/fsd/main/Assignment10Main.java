@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.cts.fsd.controller.ApplicationController;
 import com.cts.fsd.controller.UserController;
+import com.cts.fsd.dao.ApplicationDAO;
 import com.cts.fsd.dto.BookDTO;
 import com.cts.fsd.dto.SubjectDTO;
 import com.cts.fsd.exception.CustomException;
@@ -36,14 +37,18 @@ public class Assignment10Main {
 			System.out.println("d.	Delete a book");
 			System.out.println("e.	Search for a book");
 			System.out.println("f.	Search for a subject");
-			System.out.println("g.	Sort Books By Title");
-			System.out.println("h.	Sort Subjects By Subject Title");
-			System.out.println("i.	Sort Books by Publish Date");
+//			System.out.println("g.	Sort Books By Title");
+//			System.out.println("h.	Sort Subjects By Subject Title");
+//			System.out.println("i.	Sort Books by Publish Date");
 			System.out.println("j.	Exit");
 			System.out.println("==========================================================");
 			System.out.print("Value = ");
 			buffer = new BufferedReader(new InputStreamReader(System.in));
 			inputStr = buffer.readLine();
+			
+			if(!inputStr.equalsIgnoreCase("j")) {
+				ApplicationDAO.setSessionFactoryInDao();
+			}
 			
 			switch (inputStr) {
 			
@@ -54,7 +59,9 @@ public class Assignment10Main {
 						System.out.println("Operation - Add a Subject");
 						ApplicationUtility.displayHorizontalLine();
 						SubjectDTO subjectDTO = new SubjectDTO();
-						subjectDTO = UserController.getSubjectDetailsFromUser(buffer);
+//						subjectDTO = UserController.getSubjectDetailsFromUser(buffer);
+
+						subjectDTO = UserController.getSubjectDetailsFromUserNew(buffer);
 						
 						ApplicationController.addSubject(subjectDTO);
 					}
@@ -68,7 +75,10 @@ public class Assignment10Main {
 						ApplicationUtility.displayHorizontalLine();
 						
 						BookDTO bookDTO = null;
-						bookDTO = UserController.getBookDetailsFromUser(buffer);
+//						bookDTO = UserController.getBookDetailsFromUser(buffer);
+						
+						bookDTO = UserController.getBookDetailsFromUserNew(buffer);
+						
 						ApplicationController.addBook(bookDTO);
 						bookDTO = null;
 					}
@@ -140,7 +150,7 @@ public class Assignment10Main {
 					}
 					break;				
 					
-				case "g":
+				/*case "g":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -165,9 +175,9 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;
+						break;*/
 						
-				case "h":
+				/*case "h":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -190,9 +200,9 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;
+						break;*/
 						
-				case "i":
+				/*case "i":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -217,7 +227,7 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;
+						break;*/
 					
 				case "j":
 					ApplicationUtility.displayOptionReceived(inputStr);
@@ -232,14 +242,16 @@ public class Assignment10Main {
 			
 			
 			throw new CustomException("--------------------");
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (CustomException e) {
 			System.out.println(e.getMessage());
 			if(!exitProgram) {
 				main(argsToMainMethod);
 			}
+		} catch (Exception e) {
+			System.out.println("Assignment10Main : Exception occured in main() " + e.getMessage());
+			e.printStackTrace();
 		} finally {
+			ApplicationDAO.unSetSessionFactoryInDao();
 			try {
 				buffer.close();
 			} catch (IOException e) {

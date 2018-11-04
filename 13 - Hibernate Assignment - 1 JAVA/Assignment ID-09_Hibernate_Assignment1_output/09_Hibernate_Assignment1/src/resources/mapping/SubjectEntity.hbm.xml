@@ -8,15 +8,18 @@
 			<column name="SUBJECTID"  />
 			<generator class="identity" />
 		</id>
+		
 		<property name="subtitle" type="string">
 			<column name="SUBTITLE" />
 		</property>
+		
 		<property name="durationInHours" type="integer">
 			<column name="DURATIONINHOURS" />
 		</property>
+		
 		<set name="references" table="BOOK_TABLE" fetch="select">
 			<key>
-				<column name="SUBJECTID" not-null="true"></column>
+				<column name="SUBJECTID" ></column>
 			</key>
 			<one-to-many class="BookEntity"/>
 		</set>
