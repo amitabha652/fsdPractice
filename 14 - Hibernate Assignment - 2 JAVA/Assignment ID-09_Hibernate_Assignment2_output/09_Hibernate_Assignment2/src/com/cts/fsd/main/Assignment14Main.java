@@ -17,7 +17,7 @@ import com.cts.fsd.exception.CustomException;
 import com.cts.fsd.util.ApplicationUtility;
 
 
-public class Assignment10Main {
+public class Assignment14Main {
 
 	final static String RESOURCES_FOLDER = "./src/resources/requirements/";
 	
@@ -37,9 +37,9 @@ public class Assignment10Main {
 			System.out.println("d.	Delete a book");
 			System.out.println("e.	Search for a book");
 			System.out.println("f.	Search for a subject");
-//			System.out.println("g.	Sort Books By Title");
-//			System.out.println("h.	Sort Subjects By Subject Title");
-//			System.out.println("i.	Sort Books by Publish Date");
+			System.out.println("g.	Sort Books By Title");
+			System.out.println("h.	Sort Subjects By Subject Title");
+			System.out.println("i.	Sort Books by Publish Date");
 			System.out.println("j.	Exit");
 			System.out.println("==========================================================");
 			System.out.print("Value = ");
@@ -150,7 +150,7 @@ public class Assignment10Main {
 					}
 					break;				
 					
-				/*case "g":
+				case "g":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -175,9 +175,9 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;*/
+						break;
 						
-				/*case "h":
+				case "h":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -200,9 +200,9 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;*/
+						break;
 						
-				/*case "i":
+				case "i":
 						ApplicationUtility.displayOptionReceived(inputStr);
 						{
 							ApplicationUtility.displayHorizontalLine();
@@ -227,7 +227,7 @@ public class Assignment10Main {
 								}
 							}
 						}
-						break;*/
+						break;
 					
 				case "j":
 					ApplicationUtility.displayOptionReceived(inputStr);
