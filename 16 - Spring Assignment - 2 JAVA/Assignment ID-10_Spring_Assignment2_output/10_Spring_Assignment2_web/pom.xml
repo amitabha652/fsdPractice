@@ -80,7 +80,8 @@
 				<version>2.3</version>
 				<configuration>
 					<warName>${name}</warName>
-					<outputDirectory>H:\Softwares\Development\Tomcat\Tomcat 8.0\webapps</outputDirectory>
+					<!-- <outputDirectory>H:\Softwares\Development\Tomcat\Tomcat 8.0\webapps</outputDirectory> -->
+					<outputDirectory>C:\Tomcat_Servers\apache-tomcat-8.0.12_working\webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

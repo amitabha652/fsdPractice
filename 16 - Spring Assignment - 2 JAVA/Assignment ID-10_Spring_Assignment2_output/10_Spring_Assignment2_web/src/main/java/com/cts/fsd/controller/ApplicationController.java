@@ -1,7 +1,11 @@
 package com.cts.fsd.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +30,12 @@ public class ApplicationController {
 	
 	@Autowired
 	private HttpServletRequest httpServletRequest;
+
+	@Autowired
+	Book newBook;
+	
+	@Autowired
+	Subject newSubject;
  
 	@RequestMapping("/subject/search")
 	public ModelAndView displayAllSubjects(
@@ -176,25 +186,166 @@ public class ApplicationController {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/subject/add")
-	public ModelAndView addSubject(
-			@ModelAttribute("contactForm")
-			Subject subject) {
+	public ModelAndView addSubject() {
+
+		ModelAndView modelViewObject = new ModelAndView("addSubject");
+		buildRealContextPathOfApplication();
 		
-				return null;
 		
+		List<Book> allBooks = (List<Book>) FSDAppUtil.readObjectFromFile("AllBooks");
+		modelViewObject.addObject("booksFromFile", allBooks);
+
+		return modelViewObject;
+
 	}
 	
-	
-	@RequestMapping("/book/search")
-	public ModelAndView addBook(
-			@ModelAttribute("contactForm")
-			String criteria) {
+	@RequestMapping("/book/add")
+	public ModelAndView addBook() {
 		
-				return null;
+		ModelAndView modelViewObject = new ModelAndView("addBook");
+		buildRealContextPathOfApplication();
 		
+		
+		return modelViewObject;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/book/add/content")
+	public ModelAndView addBookContent (
+									@RequestParam(value = "bookId", required = true, defaultValue = "all")
+									String bookId,
+									
+									@RequestParam(value = "title", required = true, defaultValue = "all")
+									String title,
+									
+									@RequestParam(value = "price", required = true, defaultValue = "all")
+									String price,
+									
+									@RequestParam(value = "volume", required = true, defaultValue = "all")
+									String volume,
+									
+									@RequestParam(value = "publishDate", required = true, defaultValue = "all")
+									String publishDate
+										) {
+
+		ModelAndView modelViewObject = new ModelAndView("showBooks");
+		buildRealContextPathOfApplication();
+		
+		
+		List<Book> allBooks = (List<Book>) FSDAppUtil.readObjectFromFile("AllBooks");
+		
+		
+		try {
+			newBook.setBookId(Long.valueOf(bookId));
+			newBook.setTitle(title);
+			newBook.setPrice(Double.valueOf(price));
+			newBook.setVolume(Integer.valueOf(volume));
+			newBook.setPublishDate(new SimpleDateFormat("dd-MM-yyyy").parse(publishDate));
+			
+			if (allBooks == null) {
+				allBooks = new ArrayList<Book>();
+			}
+			allBooks.add(newBook);
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		modelViewObject.addObject("booksFromFile", allBooks);
+
+		return modelViewObject;
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/subject/add/content")
+	public ModelAndView addSubjectContent(
+									@RequestParam(value = "subjectId", required = true, defaultValue = "all")
+									String subjectId,
+									
+									@RequestParam(value = "subtitle", required = true, defaultValue = "all")
+									String subtitle,
+									
+									@RequestParam(value = "durationInHours", required = true, defaultValue = "all")
+									String durationInHours,
+									
+									@RequestParam(value = "booklist", required = true, defaultValue = "all")
+									String booklist
+										) {
+
+		ModelAndView modelViewObject = new ModelAndView("showSubjects");
+		buildRealContextPathOfApplication();
+		
+		
+		newSubject.setSubjectId(Long.valueOf(subjectId));
+		newSubject.setSubtitle(subtitle);
+		newSubject.setDurationInHours(Integer.valueOf(durationInHours));
+		
+		List<Book> allBooks = (List<Book>) FSDAppUtil.readObjectFromFile("AllBooks");
+		String[] bookIdArray = booklist.split(";");
+		Set<Book> references = new LinkedHashSet<Book>();
+		
+		for(int i=0; i < bookIdArray.length; i++){
+			for(Book book : allBooks) {
+				if(Long.valueOf(bookIdArray[i]).equals(Long.valueOf(book.getBookId()))) {
+					references.add(book);
+				}
+			}
+		}
+		
+		newSubject.setReferences(references);
+		
+		List<Subject> allSubjects = (List<Subject>) FSDAppUtil.readObjectFromFile("AllSubjects");
+		if(allSubjects != null) {
+			allSubjects.add(newSubject);
+		} else {
+			allSubjects = new ArrayList<Subject>();
+			allSubjects.add(newSubject);
+		}
+		
+		FSDAppUtil.writeObjectToFile(allSubjects , "AllSubjects");
+		
+		modelViewObject.addObject("subjectsFromFile", allSubjects);
+
+		return modelViewObject;
+
+	}
+	
+	/* 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * */
 	
 	
 	// All Helper Methods are given below

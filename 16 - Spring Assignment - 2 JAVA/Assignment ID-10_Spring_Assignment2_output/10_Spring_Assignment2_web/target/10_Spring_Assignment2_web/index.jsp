@@ -8,10 +8,7 @@
 <body>
  
 	<!-- <center> -->
-		<h2>Hello World Again</h2>
-		<h3>
-			<a href="fsd/showMessage?name=Eric">Click Here</a>
-		</h3>
+		<h2>FSD Assignment</h2>
 		
 		<table>
 		

@@ -37,7 +37,7 @@ public class FSDAppUtil {
 		FSDAppUtil.realContextPath = realContextPath;
 	}
 	
-	final static String RESOURCE_LOCATION = "WEB-INF" + File.separator + "classes" + File.separator;
+	final static String RESOURCE_LOCATION = File.separator + "WEB-INF" + File.separator + "classes" + File.separator;
 
 //	static AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 	
@@ -484,6 +484,7 @@ public class FSDAppUtil {
 				allSubjects.add(newSubject);
 			} else {
 				allSubjects = new ArrayList<Subject>();
+				allSubjects.add(newSubject);
 			}
 			
 			writeObjectToFile(allSubjects , "AllSubjects");
@@ -501,7 +502,6 @@ public class FSDAppUtil {
 	public static void writeObjectToFile(Object objectToWrite , String fileName) {
 		try {
 			String fileNameWithPath = getRealContextPath() + RESOURCE_LOCATION + fileName + ".ser";
-			
 			initializeFileSerializer(fileNameWithPath);
 			OBJ_OUT.writeObject(objectToWrite);
 		} catch (IOException e) {
