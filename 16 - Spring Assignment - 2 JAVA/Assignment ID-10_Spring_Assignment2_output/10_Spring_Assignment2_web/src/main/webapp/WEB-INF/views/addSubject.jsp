@@ -5,20 +5,6 @@
 
 <html>
 <script type="text/javascript">
-	/* function buildArguments() {
-		var subjectId = document.getElementByName("subjectId");
-		var subtitle = document.getElementByName("subtitle");
-		var durationInHours = document.getElementByName("durationInHours");
-		var booklist = document.getElementByName("booklist");
-		
-		
-		
-	
-	
-		var anchorElement = document.getElementById(element.getAttribute("id").replace("txt", "a"));
-		var baseHref = "fsd/" + type + "/search/";
-		anchorElement.setAttribute("href", baseHref + element.value + criteria);
-	} */
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -30,19 +16,19 @@
 	<table border="1">
 		<tr>
 			<td><label id="subjectId">Enter the Subject Id (only numbers) :: </label></td>
-			<td><input name="subjectId" type="text" /></td>
+			<td><input name="subjectId" type="text" placeholder="Subject Id"  required="required" /></td>
 		</tr>
 		<tr>
-			<td><label id="subtitle">Enter the Subject subtitle :: </label></td>
-			<td><input name="subtitle" type="text" /></td>
+			<td><label id="subtitle">Enter the Subject Title :: </label></td>
+			<td><input name="subtitle" type="text" placeholder="Subject Title"  required="required"  /></td>
 		</tr>
 		<tr>
 			<td><label id="durationInHours">Enter the Subject Duration in Hours (only numbers) :: </label></td>
-			<td><input name="durationInHours" type="text" /></td>
+			<td><input name="durationInHours" type="text" placeholder="Duration"  required="required"  /></td>
 		</tr>
 		<tr>
 			<td><label id="booklist">Enter Book ID (only numbers seperated by semi-colon ";") :- </label></td>
-			<td><input name="booklist" type="text" /></td>
+			<td><input name="booklist" type="text" placeholder="Book ID of References"  required="required"  /></td>
 		</tr>
 		
 		<tr>

@@ -56,7 +56,7 @@
 			<tr>
 				<td>f:</td>
 				<td>
-					<a id="a_book_id" href="fsd/book/search">Search Book By ID</a>
+					<a id="a_book_id" href="fsd/book/search" >Search Book By ID (only Numbers)</a>
 				</td>
 				<td>
 					<input id="txt_book_id" onkeyup="addToHrefForSearch(this , '?criteria=byId' , 'book' )" type="text"  placeholder="Book ID"  />
@@ -66,7 +66,7 @@
 			<tr>
 				<td>g:</td>
 				<td>
-					<a id="a_book_title" href="fsd/book/search">Search Book By Name</a>
+					<a id="a_book_title" href="fsd/book/search">Search Book By Name (alpha numeric)</a>
 				</td>
 				<td>
 					<input id="txt_book_title" onkeyup="addToHrefForSearch(this , '?criteria=byTitle' , 'book' )" type="text"  placeholder="Book Title"   />
@@ -83,20 +83,20 @@
 			<tr>
 				<td>i:</td>
 				<td>
-					<a id="a_sub_id" href="fsd/subject/search" >Search Subject By ID</a>
+					<a id="a_sub_id" href="fsd/subject/search" >Search Subject By ID (only Numbers)</a>
 				</td>
 				<td>
-					<input id="txt_sub_id" onkeyup="addToHrefForSearch(this , '?criteria=byId' , 'subject' )" type="text"  />
+					<input id="txt_sub_id" onkeyup="addToHrefForSearch(this , '?criteria=byId' , 'subject' )" type="text" placeholder="Subject ID"   />
 				</td>
 			</tr>
 			
 			<tr>
 				<td>j:</td>
 				<td>
-					<a id="a_sub_title" href="fsd/subject/search" >Search Subject By Name</a>
+					<a id="a_sub_title" href="fsd/subject/search" >Search Subject By Name (alpha numeric)</a>
 				</td>
 				<td>
-					<input id="txt_sub_title" onkeyup="addToHrefForSearch(this , '?criteria=byTitle' , 'subject' )" type="text"  />
+					<input id="txt_sub_title" onkeyup="addToHrefForSearch(this , '?criteria=byTitle' , 'subject' )" type="text" placeholder="Subject Title"   />
 				</td>
 			</tr>
 			
@@ -104,7 +104,8 @@
 			<tr>
 				<td>k:</td>
 				<td colspan="2" >
-					<a href="#">Exit Application</a>
+					<input id="hidden_Url" type="hidden" value="${pageContext.request.contextPath}" />
+					<a href="#" onclick="close_window()" >Exit Application</a>
 				</td>
 			</tr>
 			
@@ -123,6 +124,23 @@
 		var anchorElement = document.getElementById(element.getAttribute("id").replace("txt", "a"));
 		var baseHref = "fsd/" + type + "/delete/";
 		anchorElement.setAttribute("href", baseHref + element.value);
+	}
+	
+	function close_window() {
+		if (confirm("Close Window?")) {
+			openWin();
+		}
+	}
+	
+	function openWin() {
+		var closeUrl = document.getElementById("hidden_Url").value + "/close.jsp";
+	    myWindow = window.open(closeUrl, "_self", "width=200, height=100");
+	    
+	    closeWin(myWindow);
+	}
+	
+	function closeWin(myWindow) {
+	    myWindow.close();
 	}
 </script>
 </html>

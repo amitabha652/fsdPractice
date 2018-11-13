@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -382,8 +381,8 @@ public class ApplicationController {
 					}
 				}
 			}
-			
-			modelViewObject.addObject("criteria", "For Showing Subjects containing \"" + searchValue + "\" text in it");
+			String category = criteria.equalsIgnoreCase("byId") ? "in ID" : (criteria.equalsIgnoreCase("byTitle") ? "in TITLE" : "");
+			modelViewObject.addObject("criteria", "For Showing Subjects containing \"" + searchValue + "\" text " + category);
 			modelViewObject.addObject("subjectsFromFile", searchedSubjects);
 		} else {
 			modelViewObject.addObject("criteria", "For Showing All Subjects");
@@ -425,7 +424,9 @@ public class ApplicationController {
 				}
 			}
 			
-			modelViewObject.addObject("criteria", "For Showing Books containing \"" + searchValue + "\" text in it");
+			String category = criteria.equalsIgnoreCase("byId") ? "in ID" : (criteria.equalsIgnoreCase("byTitle") ? "in TITLE" : "");
+			
+			modelViewObject.addObject("criteria", "For Showing Books containing \"" + searchValue + "\" text " + category);
 			modelViewObject.addObject("booksFromFile", searchedBooks);
 		} else {
 			modelViewObject.addObject("criteria", "For Showing All Books");
