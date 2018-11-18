@@ -22,7 +22,7 @@ public class SubjectEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "SUBJECTID")
 	private long subjectId = 0L;
 	

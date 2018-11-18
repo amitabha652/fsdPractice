@@ -133,7 +133,7 @@
 	}
 	
 	function openWin() {
-		var closeUrl = document.getElementById("hidden_Url").value + "/close.jsp";
+		var closeUrl = document.getElementById("hidden_Url").value + "/close";
 	    myWindow = window.open(closeUrl, "_self", "width=200, height=100");
 	    
 	    closeWin(myWindow);

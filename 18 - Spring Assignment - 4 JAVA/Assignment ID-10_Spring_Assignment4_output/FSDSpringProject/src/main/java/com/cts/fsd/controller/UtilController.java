@@ -23,4 +23,11 @@ public class UtilController {
 		return modelViewObject;
 	}
 	
+	@RequestMapping(value={"/close"})
+	public ModelAndView showClosePage() {
+		System.out.println("ApplicationController :: inside showClosePage()");
+		ModelAndView modelViewObject = new ModelAndView("close");
+		return modelViewObject;
+	}
+	
 }
