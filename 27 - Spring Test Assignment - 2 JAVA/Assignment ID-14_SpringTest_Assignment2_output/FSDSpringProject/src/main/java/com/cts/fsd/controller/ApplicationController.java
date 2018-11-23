@@ -35,7 +35,7 @@ public class ApplicationController {
 	private AppControllerHelper appControllerHelper;
 	
 	
-	@Autowired
+	@Autowired(required=false)
 	private HttpServletRequest httpServletRequest;
 
  

@@ -36,8 +36,6 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Long>{
 	
 	@Transactional
     @Modifying
-//    @Query(value = "SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1", nativeQuery = true)
-//	@Query(value = "SELECT * FROM SubjectEntity S where LOWER(S.subtitle) like '%' || LOWER(:title) || '%' order by S.subjectId asc" , nativeQuery = true)
     @Query("FROM SubjectEntity S where LOWER(S.subtitle) like '%' || LOWER(:title) || '%' order by S.subjectId asc")
     public List<SubjectEntity> findSubjectByTitle(@Param("title") String title);
 }

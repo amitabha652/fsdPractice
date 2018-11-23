@@ -34,7 +34,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long>{
 	
 	@Transactional
     @Modifying
-//    @Query("select * FROM BookEntity B where LOWER(B.title) like '%' || LOWER(':title') || '%' order by B.bookId asc")
     @Query("FROM BookEntity B where LOWER(B.title) like '%' || LOWER(:title) || '%' order by B.bookId asc")
     public List<BookEntity> findBookByTitle(@Param("title") String title);
 	
